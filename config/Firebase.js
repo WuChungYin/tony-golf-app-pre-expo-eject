@@ -1,15 +1,6 @@
 import firebase from "firebase";
 import "firebase/firestore";
 
-import {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  MESSAGE_SENDER_ID,
-  APP_ID,
-} from "react-native-dotenv";
-
 export const firebaseConfig = {
   apiKey: "AIzaSyCjhJAdel85DhpVgF3UKcMvFKHfnuE0uB0",
   authDomain: "tony-golf-app.firebaseapp.com",
