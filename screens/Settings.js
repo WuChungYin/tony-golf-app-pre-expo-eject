@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Image, Text, View, Button } from "react-native";
 
 import Firebase from "../config/Firebase.js";
 
-export default class Main extends React.Component {
+export default class Settings extends React.Component {
   state = { currentUser: null };
   componentDidMount() {
     const { currentUser } = Firebase.auth();
