@@ -37,7 +37,7 @@ export default class SignUp extends React.Component {
           })
           .catch((error) => console.log("Error with set" + error.message));
       })
-      .then(() => this.props.navigation.navigate("Main"))
+      .then(() => this.props.navigation.navigate("Home"))
       .catch((error) => this.setState({ errorMessage: error.message }));
 
     // if (Firebase.auth().currentUser.uid) {
