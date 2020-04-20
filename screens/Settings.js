@@ -5,10 +5,12 @@ import Firebase from "../config/Firebase.js";
 
 export default class Settings extends React.Component {
   state = { currentUser: null };
+
   componentDidMount() {
     const { currentUser } = Firebase.auth();
     this.setState({ currentUser });
   }
+
   handleLogout = () => {
     Firebase.auth()
       .signOut()
@@ -18,6 +20,7 @@ export default class Settings extends React.Component {
       });
     this.setState({ currentUser: null });
   };
+
   render() {
     const { currentUser } = this.state;
     return (
