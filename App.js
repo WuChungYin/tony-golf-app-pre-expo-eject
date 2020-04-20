@@ -19,10 +19,13 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-const LoginStackNavigator = createStackNavigator({
-  Login: { screen: Login },
-  SignUp: { screen: SignUp },
-});
+const LoginStackNavigator = createStackNavigator(
+  {
+    Login: { screen: Login },
+    SignUp: { screen: SignUp },
+  },
+  { initialRouteName: "Login" }
+);
 
 const BottomTabNavigator = createBottomTabNavigator(
   {
