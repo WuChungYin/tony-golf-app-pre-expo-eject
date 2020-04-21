@@ -8,6 +8,8 @@ import Loading from "./screens/Loading";
 import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
+import Purchase from "./screens/Purchase";
+import Reserve from "./screens/Reserve";
 import Settings from "./screens/Settings";
 import ViewReservations from "./screens/ViewReservations";
 
@@ -27,6 +29,15 @@ const LoginStackNavigator = createStackNavigator(
   { initialRouteName: "Login" }
 );
 
+const HomeStackNavigator = createStackNavigator(
+  {
+    Home: { screen: Home },
+    Purchase: { screen: Purchase },
+    Reserve: { screen: Reserve },
+  },
+  { initialRouteName: "Home" }
+);
+
 const BottomTabNavigator = createBottomTabNavigator(
   {
     Settings: {
@@ -36,7 +47,7 @@ const BottomTabNavigator = createBottomTabNavigator(
       },
     },
     Home: {
-      screen: Home,
+      screen: HomeStackNavigator,
       navigationOptions: {
         tabBarLabel: "Home",
       },
