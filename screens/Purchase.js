@@ -9,6 +9,8 @@ import {
   FlatList,
 } from "react-native";
 
+//import CounterInput from "react-counter-input";
+
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class Purchase extends React.Component {
@@ -18,6 +20,7 @@ export default class Purchase extends React.Component {
     this.state = {
       purchaseItems: [
         {
+          id: 1,
           price: 50,
           credits: 10,
           itemName: "Package - Adult Lessons",
@@ -25,6 +28,7 @@ export default class Purchase extends React.Component {
           type: "lesson",
         },
         {
+          id: 2,
           price: 50,
           credits: 10,
           itemName: "Package - Junior Lessons",
@@ -32,6 +36,7 @@ export default class Purchase extends React.Component {
           type: "lesson",
         },
         {
+          id: 3,
           price: 150,
           credits: 30,
           itemName: "Package - Practice Lane",
@@ -39,6 +44,7 @@ export default class Purchase extends React.Component {
           type: "practice",
         },
         {
+          id: 4,
           price: 5,
           credits: 1,
           itemName: "Single - Adult Lesson",
@@ -46,6 +52,7 @@ export default class Purchase extends React.Component {
           type: "lesson",
         },
         {
+          id: 5,
           price: 5,
           credits: 1,
           itemName: "Single - Junior Lesson",
@@ -53,6 +60,7 @@ export default class Purchase extends React.Component {
           type: "lesson",
         },
         {
+          id: 6,
           price: 5,
           credits: 1,
           itemName: "Single - Practice Lane",
@@ -71,14 +79,24 @@ export default class Purchase extends React.Component {
   }
 
   render() {
-    const { currentUser } = this.state;
     return (
-      <View style={styles.container}>
-        <Text>This is Purchase Screen</Text>
+      <View style={{ flex: 1, paddingTop: 36 }}>
+        <FlatList
+          data={this.state.purchaseItems}
+          renderItem={({ item }) => (
+            <View>
+              <Text>
+                ${item.price} {item.credits} credits {item.itemName}
+              </Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
