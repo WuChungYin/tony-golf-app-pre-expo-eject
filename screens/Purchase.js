@@ -4,6 +4,7 @@ import {
   Platform,
   Image,
   Text,
+  TextInput,
   View,
   Button,
   FlatList,
@@ -68,6 +69,9 @@ export default class Purchase extends React.Component {
           type: "practice",
         },
       ],
+      priceArray: [],
+      lessonCreditArray: [],
+      practiceCreditArray: [],
       totalLessonCredits: null,
       totalPracticeCredits: null,
       totalPrice: null,
@@ -75,7 +79,35 @@ export default class Purchase extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
+    //console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
+    const numItems = this.state.purchaseItems.length;
+    //console.log("numItems: " + numItems);
+    var newArray = this.state.priceArray.slice();
+    //console.log("initialized newArray: " + JSON.stringify(newArray));
+    var i;
+    for (i = 0; i < numItems; i++) {
+      newArray.push(0);
+    }
+    //console.log("populated newArray: " + JSON.stringify(newArray));
+
+    //this.setState({ priceArray: [...this.state.priceArray, newArray] });
+    //console.log("priceArray: " + JSON.stringify(this.state.priceArray));
+    this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
+      console.log("priceArray: " + this.state.priceArray)
+    );
+    this.setState(
+      {
+        lessonCreditArray: [...this.state.lessonCreditArray, ...newArray],
+      },
+      () => console.log("lessonCreditArray: " + this.state.lessonCreditArray)
+    );
+    this.setState(
+      {
+        practiceCreditArray: [...this.state.practiceCreditArray, ...newArray],
+      },
+      () =>
+        console.log("practiceCreditArray: " + this.state.practiceCreditArray)
+    );
   }
 
   render() {
@@ -83,14 +115,16 @@ export default class Purchase extends React.Component {
       <View style={{ flex: 1, paddingTop: 36 }}>
         <FlatList
           data={this.state.purchaseItems}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View>
+              <TextInput autoCapitalize="none" placeholder="Qty" />
               <Text>
-                ${item.price} {item.credits} credits {item.itemName}
+                ${item.price} {item.credits} credits {item.itemName} Index:
+                {index}
               </Text>
             </View>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
