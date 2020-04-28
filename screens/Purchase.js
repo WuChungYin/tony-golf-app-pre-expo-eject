@@ -4,6 +4,7 @@ import {
   Platform,
   Image,
   Text,
+  TextInput,
   View,
   Button,
   FlatList,
@@ -68,6 +69,9 @@ export default class Purchase extends React.Component {
           type: "practice",
         },
       ],
+      priceArray: [],
+      lessonCreditArray: [],
+      practiceCreditArray: [],
       totalLessonCredits: null,
       totalPracticeCredits: null,
       totalPrice: null,
@@ -75,22 +79,93 @@ export default class Purchase extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
+    //console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
+    const numItems = this.state.purchaseItems.length;
+    //console.log("numItems: " + numItems);
+    var newArray = this.state.priceArray.slice();
+    //console.log("initialized newArray: " + JSON.stringify(newArray));
+    var i;
+    for (i = 0; i < numItems; i++) {
+      newArray.push(0);
+    }
+    //console.log("populated newArray: " + JSON.stringify(newArray));
+
+    this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
+      console.log("priceArray: " + this.state.priceArray)
+    );
+    this.setState(
+      {
+        lessonCreditArray: [...this.state.lessonCreditArray, ...newArray],
+      },
+      () => console.log("lessonCreditArray: " + this.state.lessonCreditArray)
+    );
+    this.setState(
+      {
+        practiceCreditArray: [...this.state.practiceCreditArray, ...newArray],
+      },
+      () =>
+        console.log("practiceCreditArray: " + this.state.practiceCreditArray)
+    );
   }
+
+  calcRowCreditPrice = (qty, item, index) => {
+    // console.log(
+    //   " quantity: " +
+    //     qty +
+    //     " credits: " +
+    //     item.credits +
+    //     " type: " +
+    //     item.type +
+    //     " index: " +
+    //     index
+    // );
+    qty = parseInt(qty, 10); //10 means base-10
+    if (item.type == "lesson") {
+      var lessonCredits = qty * item.credits;
+      //console.log("Lesson credits:" + lessonCredits);
+      const newArray = [...this.state.lessonCreditArray];
+      newArray[index] = lessonCredits;
+      this.setState({ lessonCreditArray: newArray });
+      //console.log("lessonCreditArray: " + this.state.lessonCreditArray);
+    } else if (item.type == "practice") {
+      var practiceCredits = qty * item.credits;
+      //console.log("Practice credits: " + practiceCredits);
+      const newArray = [...this.state.practiceCreditArray];
+      newArray[index] = practiceCredits;
+      this.setState({ practiceCreditArray: newArray });
+      //console.log("practiceCreditArray: " + this.state.practiceCreditArray);
+    }
+    var price = qty * item.price;
+    //console.log("Price: " + price);
+    const newArray = [...this.state.priceArray];
+    newArray[index] = price;
+    this.setState({ priceArray: newArray });
+    //console.log("priceArray: " + this.state.priceArray);
+  };
 
   render() {
     return (
       <View style={{ flex: 1, paddingTop: 36 }}>
         <FlatList
           data={this.state.purchaseItems}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View>
+              <TextInput
+                autoCapitalize="none"
+                placeholder="Qty"
+                item={item}
+                index={index}
+                onChangeText={(qty) =>
+                  this.calcRowCreditPrice(qty, item, index)
+                }
+              />
               <Text>
-                ${item.price} {item.credits} credits {item.itemName}
+                ${item.price} {item.credits} credits {item.itemName} Index:
+                {index}
               </Text>
             </View>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
