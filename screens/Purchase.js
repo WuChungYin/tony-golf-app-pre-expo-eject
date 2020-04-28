@@ -90,8 +90,6 @@ export default class Purchase extends React.Component {
     }
     //console.log("populated newArray: " + JSON.stringify(newArray));
 
-    //this.setState({ priceArray: [...this.state.priceArray, newArray] });
-    //console.log("priceArray: " + JSON.stringify(this.state.priceArray));
     this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
       console.log("priceArray: " + this.state.priceArray)
     );
@@ -110,6 +108,41 @@ export default class Purchase extends React.Component {
     );
   }
 
+  calcRowCreditPrice = (qty, item, index) => {
+    // console.log(
+    //   " quantity: " +
+    //     qty +
+    //     " credits: " +
+    //     item.credits +
+    //     " type: " +
+    //     item.type +
+    //     " index: " +
+    //     index
+    // );
+    qty = parseInt(qty, 10); //10 means base-10
+    if (item.type == "lesson") {
+      var lessonCredits = qty * item.credits;
+      //console.log("Lesson credits:" + lessonCredits);
+      const newArray = [...this.state.lessonCreditArray];
+      newArray[index] = lessonCredits;
+      this.setState({ lessonCreditArray: newArray });
+      //console.log("lessonCreditArray: " + this.state.lessonCreditArray);
+    } else if (item.type == "practice") {
+      var practiceCredits = qty * item.credits;
+      //console.log("Practice credits: " + practiceCredits);
+      const newArray = [...this.state.practiceCreditArray];
+      newArray[index] = practiceCredits;
+      this.setState({ practiceCreditArray: newArray });
+      //console.log("practiceCreditArray: " + this.state.practiceCreditArray);
+    }
+    var price = qty * item.price;
+    //console.log("Price: " + price);
+    const newArray = [...this.state.priceArray];
+    newArray[index] = price;
+    this.setState({ priceArray: newArray });
+    //console.log("priceArray: " + this.state.priceArray);
+  };
+
   render() {
     return (
       <View style={{ flex: 1, paddingTop: 36 }}>
@@ -117,7 +150,15 @@ export default class Purchase extends React.Component {
           data={this.state.purchaseItems}
           renderItem={({ item, index }) => (
             <View>
-              <TextInput autoCapitalize="none" placeholder="Qty" />
+              <TextInput
+                autoCapitalize="none"
+                placeholder="Qty"
+                item={item}
+                index={index}
+                onChangeText={(qty) =>
+                  this.calcRowCreditPrice(qty, item, index)
+                }
+              />
               <Text>
                 ${item.price} {item.credits} credits {item.itemName} Index:
                 {index}
