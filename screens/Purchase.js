@@ -119,28 +119,66 @@ export default class Purchase extends React.Component {
     //     " index: " +
     //     index
     // );
-    qty = parseInt(qty, 10); //10 means base-10
+    var intqty = parseInt(qty, 10); //10 means base-10
     if (item.type == "lesson") {
-      var lessonCredits = qty * item.credits;
+      var lessonCredits = intqty * item.credits;
       //console.log("Lesson credits:" + lessonCredits);
       const newArray = [...this.state.lessonCreditArray];
       newArray[index] = lessonCredits;
-      this.setState({ lessonCreditArray: newArray });
-      //console.log("lessonCreditArray: " + this.state.lessonCreditArray);
+      this.setState({ lessonCreditArray: newArray }, () =>
+        console.log("lessonCreditArray: " + this.state.lessonCreditArray)
+      );
     } else if (item.type == "practice") {
-      var practiceCredits = qty * item.credits;
+      var practiceCredits = intqty * item.credits;
       //console.log("Practice credits: " + practiceCredits);
       const newArray = [...this.state.practiceCreditArray];
       newArray[index] = practiceCredits;
-      this.setState({ practiceCreditArray: newArray });
-      //console.log("practiceCreditArray: " + this.state.practiceCreditArray);
+      this.setState({ practiceCreditArray: newArray }, () =>
+        console.log("practiceCreditArray: " + this.state.practiceCreditArray)
+      );
     }
-    var price = qty * item.price;
+    var price = intqty * item.price;
     //console.log("Price: " + price);
     const newArray = [...this.state.priceArray];
     newArray[index] = price;
-    this.setState({ priceArray: newArray });
-    //console.log("priceArray: " + this.state.priceArray);
+    this.setState({ priceArray: newArray }, () =>
+      console.log("priceArray: " + this.state.priceArray)
+    );
+  };
+
+  calcTotalCreditPrice = () => {
+    var numPrice = this.state.priceArray.length;
+    var i;
+    var totalPrice = 0;
+    //console.log("priceArray before totaling: " + this.state.priceArray);
+    for (i = 0; i < numPrice; i++) {
+      totalPrice = totalPrice + this.state.priceArray[i];
+    }
+    this.setState({ totalPrice: totalPrice }, () =>
+      console.log("Total Price: " + this.state.totalPrice)
+    );
+    //console.log("Total Price: " + totalPrice);
+
+    var numLessonCredits = this.state.lessonCreditArray.length;
+    var i;
+    var totalLessonCredits = 0;
+    for (i = 0; i < numLessonCredits; i++) {
+      totalLessonCredits = totalLessonCredits + this.state.lessonCreditArray[i];
+    }
+    this.setState({ totalLessonCredits: totalLessonCredits }, () =>
+      console.log("Total Lesson Credits: " + this.state.totalLessonCredits)
+    );
+
+    var numPracticeCredits = this.state.practiceCreditArray.length;
+    var i;
+    var totalPracticeCredits = 0;
+    for (i = 0; i < numPracticeCredits; i++) {
+      totalPracticeCredits =
+        totalPracticeCredits + this.state.practiceCreditArray[i];
+    }
+    this.setState({ totalPracticeCredits: totalPracticeCredits }, () =>
+      console.log("Total Practice Credits: " + this.state.totalPracticeCredits)
+    );
   };
 
   render() {
@@ -166,6 +204,13 @@ export default class Purchase extends React.Component {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
+        />
+        <Text>Total Price: {this.state.totalPrice}</Text>
+        <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
+        <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
+        <Button
+          title="Get Total Price and Credits"
+          onPress={this.calcTotalCreditPrice}
         />
       </View>
     );
