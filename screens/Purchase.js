@@ -69,12 +69,13 @@ export default class Purchase extends React.Component {
           type: "practice",
         },
       ],
-      priceArray: [],
-      lessonCreditArray: [],
-      practiceCreditArray: [],
-      totalLessonCredits: null,
-      totalPracticeCredits: null,
-      totalPrice: null,
+      //   priceArray: [],
+      //   lessonCreditArray: [],
+      //   practiceCreditArray: [],
+      //   totalLessonCredits: null,
+      //   totalPracticeCredits: null,
+      //   totalPrice: null,
+      qtyArray: [],
     };
   }
 
@@ -82,7 +83,7 @@ export default class Purchase extends React.Component {
     //console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
     const numItems = this.state.purchaseItems.length;
     //console.log("numItems: " + numItems);
-    var newArray = this.state.priceArray.slice();
+    var newArray = this.state.qtyArray.slice();
     //console.log("initialized newArray: " + JSON.stringify(newArray));
     var i;
     for (i = 0; i < numItems; i++) {
@@ -90,96 +91,147 @@ export default class Purchase extends React.Component {
     }
     //console.log("populated newArray: " + JSON.stringify(newArray));
 
-    this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
-      console.log("priceArray: " + this.state.priceArray)
+    this.setState({ qtyArray: [...this.state.qtyArray, ...newArray] }, () =>
+      console.log("qtyArray: " + this.state.qtyArray)
     );
-    this.setState(
-      {
-        lessonCreditArray: [...this.state.lessonCreditArray, ...newArray],
-      },
-      () => console.log("lessonCreditArray: " + this.state.lessonCreditArray)
-    );
-    this.setState(
-      {
-        practiceCreditArray: [...this.state.practiceCreditArray, ...newArray],
-      },
-      () =>
-        console.log("practiceCreditArray: " + this.state.practiceCreditArray)
-    );
+    // this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
+    //   console.log("priceArray: " + this.state.priceArray)
+    // );
+    // this.setState(
+    //   {
+    //     lessonCreditArray: [...this.state.lessonCreditArray, ...newArray],
+    //   },
+    //   () => console.log("lessonCreditArray: " + this.state.lessonCreditArray)
+    // );
+    // this.setState(
+    //   {
+    //     practiceCreditArray: [...this.state.practiceCreditArray, ...newArray],
+    //   },
+    //   () =>
+    //     console.log("practiceCreditArray: " + this.state.practiceCreditArray)
+    // );
   }
 
-  calcRowCreditPrice = (qty, item, index) => {
-    // console.log(
-    //   " quantity: " +
-    //     qty +
-    //     " credits: " +
-    //     item.credits +
-    //     " type: " +
-    //     item.type +
-    //     " index: " +
-    //     index
-    // );
+  setRowQty = (qty, item, index) => {
     var intqty = parseInt(qty, 10); //10 means base-10
-    if (item.type == "lesson") {
-      var lessonCredits = intqty * item.credits;
-      //console.log("Lesson credits:" + lessonCredits);
-      const newArray = [...this.state.lessonCreditArray];
-      newArray[index] = lessonCredits;
-      this.setState({ lessonCreditArray: newArray }, () =>
-        console.log("lessonCreditArray: " + this.state.lessonCreditArray)
-      );
-    } else if (item.type == "practice") {
-      var practiceCredits = intqty * item.credits;
-      //console.log("Practice credits: " + practiceCredits);
-      const newArray = [...this.state.practiceCreditArray];
-      newArray[index] = practiceCredits;
-      this.setState({ practiceCreditArray: newArray }, () =>
-        console.log("practiceCreditArray: " + this.state.practiceCreditArray)
-      );
-    }
-    var price = intqty * item.price;
-    //console.log("Price: " + price);
-    const newArray = [...this.state.priceArray];
-    newArray[index] = price;
-    this.setState({ priceArray: newArray }, () =>
-      console.log("priceArray: " + this.state.priceArray)
+    const newArray = [...this.state.qtyArray];
+    newArray[index] = intqty;
+    this.setState({ qtyArray: newArray }, () =>
+      console.log("qtyArray: " + this.state.qtyArray)
     );
   };
 
-  calcTotalCreditPrice = () => {
-    var numPrice = this.state.priceArray.length;
-    var i;
-    var totalPrice = 0;
-    //console.log("priceArray before totaling: " + this.state.priceArray);
-    for (i = 0; i < numPrice; i++) {
-      totalPrice = totalPrice + this.state.priceArray[i];
-    }
-    this.setState({ totalPrice: totalPrice }, () =>
-      console.log("Total Price: " + this.state.totalPrice)
-    );
-    //console.log("Total Price: " + totalPrice);
+  addToShoppingCart = (qtyArray, data) => {
+    console.log("shopping qtyArray: " + JSON.stringify(qtyArray));
+    console.log("shopping purchaseItems: " + JSON.stringify(data));
 
-    var numLessonCredits = this.state.lessonCreditArray.length;
-    var i;
-    var totalLessonCredits = 0;
-    for (i = 0; i < numLessonCredits; i++) {
-      totalLessonCredits = totalLessonCredits + this.state.lessonCreditArray[i];
-    }
-    this.setState({ totalLessonCredits: totalLessonCredits }, () =>
-      console.log("Total Lesson Credits: " + this.state.totalLessonCredits)
-    );
+    const { currentUser } = Firebase.auth();
+    const uid = currentUser.uid;
+    console.log("user's UID: " + uid);
 
-    var numPracticeCredits = this.state.practiceCreditArray.length;
-    var i;
-    var totalPracticeCredits = 0;
-    for (i = 0; i < numPracticeCredits; i++) {
-      totalPracticeCredits =
-        totalPracticeCredits + this.state.practiceCreditArray[i];
+    var batch = db.batch();
+    for (var i = 0; i < qtyArray.length; i++) {
+      const shoppingCartItem = {
+        qty: qtyArray[i],
+        price: data[i].price,
+        credits: data[i].credits,
+        itemName: data[i].itemName,
+        age: data[i].age,
+        type: data[i].type,
+        uid: uid,
+      };
+
+      console.log(
+        "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
+      );
+
+      if (shoppingCartItem.qty == 0) {
+        console.log("not inserting this item");
+      } else {
+        console.log("inserting this item");
+
+        var docRef = db.collection("shoppingCart").doc();
+        batch.set(docRef, shoppingCartItem);
+      }
     }
-    this.setState({ totalPracticeCredits: totalPracticeCredits }, () =>
-      console.log("Total Practice Credits: " + this.state.totalPracticeCredits)
-    );
+    batch
+      .commit()
+      .then(() => this.props.navigation.navigate("ShoppingCart"))
+      .then(console.log("added to shopping cart successfully"));
   };
+
+  //   calcRowCreditPrice = (qty, item, index) => {
+  //     // console.log(
+  //     //   " quantity: " +
+  //     //     qty +
+  //     //     " credits: " +
+  //     //     item.credits +
+  //     //     " type: " +
+  //     //     item.type +
+  //     //     " index: " +
+  //     //     index
+  //     // );
+  //     var intqty = parseInt(qty, 10); //10 means base-10
+  //     if (item.type == "lesson") {
+  //       var lessonCredits = intqty * item.credits;
+  //       //console.log("Lesson credits:" + lessonCredits);
+  //       const newArray = [...this.state.lessonCreditArray];
+  //       newArray[index] = lessonCredits;
+  //       this.setState({ lessonCreditArray: newArray }, () =>
+  //         console.log("lessonCreditArray: " + this.state.lessonCreditArray)
+  //       );
+  //     } else if (item.type == "practice") {
+  //       var practiceCredits = intqty * item.credits;
+  //       //console.log("Practice credits: " + practiceCredits);
+  //       const newArray = [...this.state.practiceCreditArray];
+  //       newArray[index] = practiceCredits;
+  //       this.setState({ practiceCreditArray: newArray }, () =>
+  //         console.log("practiceCreditArray: " + this.state.practiceCreditArray)
+  //       );
+  //     }
+  //     var price = intqty * item.price;
+  //     //console.log("Price: " + price);
+  //     const newArray = [...this.state.priceArray];
+  //     newArray[index] = price;
+  //     this.setState({ priceArray: newArray }, () =>
+  //       console.log("priceArray: " + this.state.priceArray)
+  //     );
+  //   };
+
+  //   calcTotalCreditPrice = () => {
+  //     var numPrice = this.state.priceArray.length;
+  //     var i;
+  //     var totalPrice = 0;
+  //     //console.log("priceArray before totaling: " + this.state.priceArray);
+  //     for (i = 0; i < numPrice; i++) {
+  //       totalPrice = totalPrice + this.state.priceArray[i];
+  //     }
+  //     this.setState({ totalPrice: totalPrice }, () =>
+  //       console.log("Total Price: " + this.state.totalPrice)
+  //     );
+  //     //console.log("Total Price: " + totalPrice);
+
+  //     var numLessonCredits = this.state.lessonCreditArray.length;
+  //     var i;
+  //     var totalLessonCredits = 0;
+  //     for (i = 0; i < numLessonCredits; i++) {
+  //       totalLessonCredits = totalLessonCredits + this.state.lessonCreditArray[i];
+  //     }
+  //     this.setState({ totalLessonCredits: totalLessonCredits }, () =>
+  //       console.log("Total Lesson Credits: " + this.state.totalLessonCredits)
+  //     );
+
+  //     var numPracticeCredits = this.state.practiceCreditArray.length;
+  //     var i;
+  //     var totalPracticeCredits = 0;
+  //     for (i = 0; i < numPracticeCredits; i++) {
+  //       totalPracticeCredits =
+  //         totalPracticeCredits + this.state.practiceCreditArray[i];
+  //     }
+  //     this.setState({ totalPracticeCredits: totalPracticeCredits }, () =>
+  //       console.log("Total Practice Credits: " + this.state.totalPracticeCredits)
+  //     );
+  //   };
 
   render() {
     return (
@@ -193,9 +245,7 @@ export default class Purchase extends React.Component {
                 placeholder="Qty"
                 item={item}
                 index={index}
-                onChangeText={(qty) =>
-                  this.calcRowCreditPrice(qty, item, index)
-                }
+                onChangeText={(qty) => this.setRowQty(qty, item, index)}
               />
               <Text>
                 ${item.price} {item.credits} credits {item.itemName} Index:
@@ -205,12 +255,14 @@ export default class Purchase extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Text>Total Price: {this.state.totalPrice}</Text>
-        <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
-        <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
         <Button
-          title="Get Total Price and Credits"
-          onPress={this.calcTotalCreditPrice}
+          title="See Shopping Cart"
+          onPress={() =>
+            this.addToShoppingCart(
+              this.state.qtyArray,
+              this.state.purchaseItems
+            )
+          }
         />
       </View>
     );
