@@ -131,27 +131,25 @@ export default class Purchase extends React.Component {
 
     var batch = db.batch();
     for (var i = 0; i < qtyArray.length; i++) {
-      const shoppingCartItem = {
-        qty: qtyArray[i],
-        price: data[i].price,
-        credits: data[i].credits,
-        itemName: data[i].itemName,
-        age: data[i].age,
-        type: data[i].type,
-        uid: uid,
-      };
+      if (qtyArray[i] >= 1) {
+        const shoppingCartItem = {
+          qty: qtyArray[i],
+          price: data[i].price,
+          credits: data[i].credits,
+          itemName: data[i].itemName,
+          age: data[i].age,
+          type: data[i].type,
+          uid: uid,
+        };
 
-      console.log(
-        "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
-      );
-
-      if (shoppingCartItem.qty == 0) {
-        console.log("not inserting this item");
-      } else {
+        console.log(
+          "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
+        );
         console.log("inserting this item");
-
         var docRef = db.collection("shoppingCart").doc();
         batch.set(docRef, shoppingCartItem);
+      } else {
+        console.log("not inserting this item");
       }
     }
     batch
