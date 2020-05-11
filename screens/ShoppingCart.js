@@ -20,6 +20,9 @@ export default class ShoppingCart extends React.Component {
     this.state = {
       shoppingCartData: [],
       currentUser: null,
+      totalPrice: 0,
+      totalPracticeCredits: 0,
+      totalLessonCredits: 0,
     };
   }
 
@@ -64,6 +67,32 @@ export default class ShoppingCart extends React.Component {
     console.log(
       "shoppingCartData = " + JSON.stringify(this.state.shoppingCartData)
     );
+
+    var tempTotalPrice = 0;
+    var tempLessonCredits = 0;
+    var tempPracticeCredits = 0;
+    for (var i = 0; i < shoppingCartData.length; i++) {
+      tempTotalPrice =
+        shoppingCartData[i].qty * shoppingCartData[i].price + tempTotalPrice;
+      if (shoppingCartData[i].type == "practice") {
+        tempPracticeCredits =
+          shoppingCartData[i].qty * shoppingCartData[i].credits +
+          tempPracticeCredits;
+      } else if (shoppingCartData[i].type == "lesson") {
+        tempLessonCredits =
+          shoppingCartData[i].qty * shoppingCartData[i].credits +
+          tempLessonCredits;
+      }
+    }
+    this.setState({ totalPrice: tempTotalPrice }, () =>
+      console.log("Total Price: " + this.state.totalPrice)
+    );
+    this.setState({ totalLessonCredits: tempLessonCredits }, () =>
+      console.log("Total Lesson Credits: " + this.state.totalLessonCredits)
+    );
+    this.setState({ totalPracticeCredits: tempPracticeCredits }, () =>
+      console.log("Total Practice Credits: " + this.state.totalPracticeCredits)
+    );
   };
 
   render() {
@@ -71,6 +100,9 @@ export default class ShoppingCart extends React.Component {
     return (
       <View style={{ flex: 1, paddingTop: 36 }}>
         <Text>Hi {currentUser && currentUser.email}!</Text>
+        <Text>Total Price:{this.state.totalPrice}</Text>
+        <Text>Total Lesson Credits:{this.state.totalLessonCredits}</Text>
+        <Text>Total Practice Credits:{this.state.totalPracticeCredits}</Text>
         <FlatList
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
