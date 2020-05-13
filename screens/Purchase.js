@@ -10,8 +10,6 @@ import {
   FlatList,
 } from "react-native";
 
-//import CounterInput from "react-counter-input";
-
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class Purchase extends React.Component {
@@ -69,12 +67,6 @@ export default class Purchase extends React.Component {
           type: "practice",
         },
       ],
-      //   priceArray: [],
-      //   lessonCreditArray: [],
-      //   practiceCreditArray: [],
-      //   totalLessonCredits: null,
-      //   totalPracticeCredits: null,
-      //   totalPrice: null,
       qtyArray: [],
     };
   }
@@ -90,26 +82,9 @@ export default class Purchase extends React.Component {
       newArray.push(0);
     }
     //console.log("populated newArray: " + JSON.stringify(newArray));
-
     this.setState({ qtyArray: [...this.state.qtyArray, ...newArray] }, () =>
       console.log("qtyArray: " + this.state.qtyArray)
     );
-    // this.setState({ priceArray: [...this.state.priceArray, ...newArray] }, () =>
-    //   console.log("priceArray: " + this.state.priceArray)
-    // );
-    // this.setState(
-    //   {
-    //     lessonCreditArray: [...this.state.lessonCreditArray, ...newArray],
-    //   },
-    //   () => console.log("lessonCreditArray: " + this.state.lessonCreditArray)
-    // );
-    // this.setState(
-    //   {
-    //     practiceCreditArray: [...this.state.practiceCreditArray, ...newArray],
-    //   },
-    //   () =>
-    //     console.log("practiceCreditArray: " + this.state.practiceCreditArray)
-    // );
   }
 
   setRowQty = (qty, item, index) => {
@@ -154,82 +129,9 @@ export default class Purchase extends React.Component {
     }
     batch
       .commit()
-      .then(() => this.props.navigation.navigate("ShoppingCart"))
+      //.then(() => this.props.navigation.navigate("ShoppingCart"))
       .then(console.log("added to shopping cart successfully"));
   };
-
-  //   calcRowCreditPrice = (qty, item, index) => {
-  //     // console.log(
-  //     //   " quantity: " +
-  //     //     qty +
-  //     //     " credits: " +
-  //     //     item.credits +
-  //     //     " type: " +
-  //     //     item.type +
-  //     //     " index: " +
-  //     //     index
-  //     // );
-  //     var intqty = parseInt(qty, 10); //10 means base-10
-  //     if (item.type == "lesson") {
-  //       var lessonCredits = intqty * item.credits;
-  //       //console.log("Lesson credits:" + lessonCredits);
-  //       const newArray = [...this.state.lessonCreditArray];
-  //       newArray[index] = lessonCredits;
-  //       this.setState({ lessonCreditArray: newArray }, () =>
-  //         console.log("lessonCreditArray: " + this.state.lessonCreditArray)
-  //       );
-  //     } else if (item.type == "practice") {
-  //       var practiceCredits = intqty * item.credits;
-  //       //console.log("Practice credits: " + practiceCredits);
-  //       const newArray = [...this.state.practiceCreditArray];
-  //       newArray[index] = practiceCredits;
-  //       this.setState({ practiceCreditArray: newArray }, () =>
-  //         console.log("practiceCreditArray: " + this.state.practiceCreditArray)
-  //       );
-  //     }
-  //     var price = intqty * item.price;
-  //     //console.log("Price: " + price);
-  //     const newArray = [...this.state.priceArray];
-  //     newArray[index] = price;
-  //     this.setState({ priceArray: newArray }, () =>
-  //       console.log("priceArray: " + this.state.priceArray)
-  //     );
-  //   };
-
-  //   calcTotalCreditPrice = () => {
-  //     var numPrice = this.state.priceArray.length;
-  //     var i;
-  //     var totalPrice = 0;
-  //     //console.log("priceArray before totaling: " + this.state.priceArray);
-  //     for (i = 0; i < numPrice; i++) {
-  //       totalPrice = totalPrice + this.state.priceArray[i];
-  //     }
-  //     this.setState({ totalPrice: totalPrice }, () =>
-  //       console.log("Total Price: " + this.state.totalPrice)
-  //     );
-  //     //console.log("Total Price: " + totalPrice);
-
-  //     var numLessonCredits = this.state.lessonCreditArray.length;
-  //     var i;
-  //     var totalLessonCredits = 0;
-  //     for (i = 0; i < numLessonCredits; i++) {
-  //       totalLessonCredits = totalLessonCredits + this.state.lessonCreditArray[i];
-  //     }
-  //     this.setState({ totalLessonCredits: totalLessonCredits }, () =>
-  //       console.log("Total Lesson Credits: " + this.state.totalLessonCredits)
-  //     );
-
-  //     var numPracticeCredits = this.state.practiceCreditArray.length;
-  //     var i;
-  //     var totalPracticeCredits = 0;
-  //     for (i = 0; i < numPracticeCredits; i++) {
-  //       totalPracticeCredits =
-  //         totalPracticeCredits + this.state.practiceCreditArray[i];
-  //     }
-  //     this.setState({ totalPracticeCredits: totalPracticeCredits }, () =>
-  //       console.log("Total Practice Credits: " + this.state.totalPracticeCredits)
-  //     );
-  //   };
 
   render() {
     return (
@@ -254,13 +156,17 @@ export default class Purchase extends React.Component {
           keyExtractor={(item, index) => index.toString()}
         />
         <Button
-          title="See Shopping Cart"
+          title="Add to Shopping Cart"
           onPress={() =>
             this.addToShoppingCart(
               this.state.qtyArray,
               this.state.purchaseItems
             )
           }
+        />
+        <Button
+          title="View Shopping Cart"
+          onPress={() => this.props.navigation.navigate("ShoppingCart")}
         />
       </View>
     );
