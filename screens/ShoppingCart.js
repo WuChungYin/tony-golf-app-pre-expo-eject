@@ -12,8 +12,6 @@ import {
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class ShoppingCart extends React.Component {
-  //state = { currentUser: null };
-
   constructor(props) {
     super(props);
     this.unsubscribe = null;
@@ -45,12 +43,7 @@ export default class ShoppingCart extends React.Component {
     const shoppingCartData = [];
     querySnapshot.forEach((doc) => {
       const { qty, price, credits, itemName, type, age, uid } = doc.data();
-      //   console.log(
-      //     "doc data:" + qty + price + credits + itemName + type + age + uid
-      //   );
       shoppingCartData.push({
-        //key: doc.id,
-        //doc,
         qty,
         price,
         credits,
@@ -60,9 +53,6 @@ export default class ShoppingCart extends React.Component {
         uid,
       });
     });
-    // console.log(
-    //   "initial shopping cart data: " + JSON.stringify(shoppingCartData)
-    // );
     this.setState({ shoppingCartData: shoppingCartData });
     console.log(
       "shoppingCartData = " + JSON.stringify(this.state.shoppingCartData)
