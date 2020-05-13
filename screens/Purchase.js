@@ -8,6 +8,7 @@ import {
   View,
   Button,
   FlatList,
+  Alert,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -89,6 +90,10 @@ export default class Purchase extends React.Component {
 
   setRowQty = (qty, item, index) => {
     var intqty = parseInt(qty, 10); //10 means base-10
+    if (!intqty) {
+      //checking if intqty is null or NaN, and if so, set it to 0
+      intqty = 0;
+    }
     const newArray = [...this.state.qtyArray];
     newArray[index] = intqty;
     this.setState({ qtyArray: newArray }, () =>
@@ -104,8 +109,11 @@ export default class Purchase extends React.Component {
     const uid = currentUser.uid;
     console.log("user's UID: " + uid);
 
+    var qtyTotal = 0;
     var batch = db.batch();
     for (var i = 0; i < qtyArray.length; i++) {
+      console.log("qtyArray current qty:" + qtyArray[i]);
+      qtyTotal = qtyTotal + qtyArray[i];
       if (qtyArray[i] >= 1) {
         const shoppingCartItem = {
           qty: qtyArray[i],
@@ -116,7 +124,6 @@ export default class Purchase extends React.Component {
           type: data[i].type,
           uid: uid,
         };
-
         console.log(
           "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
         );
@@ -127,10 +134,24 @@ export default class Purchase extends React.Component {
         console.log("not inserting this item");
       }
     }
-    batch
-      .commit()
-      //.then(() => this.props.navigation.navigate("ShoppingCart"))
-      .then(console.log("added to shopping cart successfully"));
+
+    console.log("qtyTotal:" + qtyTotal);
+    if (qtyTotal > 0) {
+      batch
+        .commit()
+        .then(console.log("added to shopping cart successfully"))
+        .then(
+          Alert.alert(
+            "Success!",
+            "The items you selected have been added to your shopping cart."
+          )
+        );
+    } else {
+      Alert.alert(
+        "No items to add",
+        "You have not selected items to add to your shopping cart."
+      );
+    }
   };
 
   render() {
