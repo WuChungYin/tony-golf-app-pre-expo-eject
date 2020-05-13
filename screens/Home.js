@@ -95,6 +95,10 @@ export default class Home extends React.Component {
           title="Purchase Credits"
           onPress={() => this.props.navigation.navigate("Purchase")}
         />
+        <Button
+          title="View Shopping Cart"
+          onPress={() => this.props.navigation.navigate("ShoppingCart")}
+        />
       </View>
     );
   }
