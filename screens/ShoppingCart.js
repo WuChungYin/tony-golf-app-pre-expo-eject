@@ -42,8 +42,9 @@ export default class ShoppingCart extends React.Component {
   onCollectionUpdate = (querySnapshot) => {
     const shoppingCartData = [];
     querySnapshot.forEach((doc) => {
-      const { qty, price, credits, itemName, type, age, uid } = doc.data();
+      const { id, qty, price, credits, itemName, type, age, uid } = doc.data();
       shoppingCartData.push({
+        id,
         qty,
         price,
         credits,
@@ -85,6 +86,11 @@ export default class ShoppingCart extends React.Component {
     );
   };
 
+  deleteItem = (index, item) => {
+    console.log("Delete item index: " + index);
+    console.log("Delete item id:" + item.id);
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -100,8 +106,13 @@ export default class ShoppingCart extends React.Component {
               <Text>
                 Qty:{item.qty} Price:${item.price} Credits:{item.credits} Item
                 Name:{item.itemName} UID:{item.uid} Index:
-                {index}
+                {index} itemID: {item.id}
               </Text>
+              <Button
+                title="Delete Item"
+                item={item}
+                onPress={() => this.deleteItem(index, item)}
+              />
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
