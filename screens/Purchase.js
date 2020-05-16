@@ -115,7 +115,12 @@ export default class Purchase extends React.Component {
       console.log("qtyArray current qty:" + qtyArray[i]);
       qtyTotal = qtyTotal + qtyArray[i];
       if (qtyArray[i] >= 1) {
+        var docRef = db.collection("shoppingCart").doc();
+
+        console.log("Docref.id: " + docRef.id);
+
         const shoppingCartItem = {
+          id: docRef.id,
           qty: qtyArray[i],
           price: data[i].price,
           credits: data[i].credits,
@@ -128,7 +133,7 @@ export default class Purchase extends React.Component {
           "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
         );
         console.log("inserting this item");
-        var docRef = db.collection("shoppingCart").doc();
+        //var docRef = db.collection("shoppingCart").doc();
         batch.set(docRef, shoppingCartItem);
       } else {
         console.log("not inserting this item");
