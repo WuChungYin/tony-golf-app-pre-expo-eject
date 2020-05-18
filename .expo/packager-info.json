@@ -1,8 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 18328,
+  "packagerPid": 7808,
   "expoServerNgrokUrl": "https://46-69m.anonymous.tony-golf-app.exp.direct",
   "packagerNgrokUrl": "https://packager.46-69m.anonymous.tony-golf-app.exp.direct",
-  "ngrokPid": 11424
+  "ngrokPid": 20844,
+  "devToolsPort": 19002
 }
