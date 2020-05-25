@@ -127,6 +127,16 @@ export default class ShoppingCart extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+        <Button
+          title="Go to Payment"
+          onPress={() =>
+            this.props.navigation.navigate("Payment", {
+              price: this.state.totalPrice,
+              lessonCredits: this.state.totalLessonCredits,
+              practiceCredits: this.state.totalPracticeCredits,
+            })
+          }
+        />
       </View>
     );
   }
