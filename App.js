@@ -10,6 +10,7 @@ import Login from "./screens/Login";
 import Home from "./screens/Home";
 import Purchase from "./screens/Purchase";
 import ShoppingCart from "./screens/ShoppingCart";
+import Payment from "./screens/Payment";
 import Reserve from "./screens/Reserve";
 import Settings from "./screens/Settings";
 import ViewReservations from "./screens/ViewReservations";
@@ -35,6 +36,7 @@ const HomeStackNavigator = createStackNavigator(
     Home: { screen: Home },
     Purchase: { screen: Purchase },
     ShoppingCart: { screen: ShoppingCart },
+    Payment: { screen: Payment },
     Reserve: { screen: Reserve },
   },
   { initialRouteName: "Home" }
