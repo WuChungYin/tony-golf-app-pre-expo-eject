@@ -89,6 +89,16 @@ export default class ShoppingCart extends React.Component {
   deleteItem = (index, item) => {
     console.log("Delete item index: " + index);
     console.log("Delete item id:" + item.id);
+
+    const filteredShoppingCartData = this.state.shoppingCartData.filter(
+      (cartItem) => cartItem.id !== item.id
+    );
+    this.setState({ shoppingCartData: filteredShoppingCartData });
+
+    db.collection("shoppingCart")
+      .doc(item.id)
+      .delete()
+      .then(() => console.log(item.id + "deleted successfully!"));
   };
 
   render() {
@@ -116,6 +126,16 @@ export default class ShoppingCart extends React.Component {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
+        />
+        <Button
+          title="Go to Payment"
+          onPress={() =>
+            this.props.navigation.navigate("Payment", {
+              price: this.state.totalPrice,
+              lessonCredits: this.state.totalLessonCredits,
+              practiceCredits: this.state.totalPracticeCredits,
+            })
+          }
         />
       </View>
     );
