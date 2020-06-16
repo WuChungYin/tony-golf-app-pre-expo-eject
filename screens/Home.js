@@ -12,9 +12,32 @@ import {
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class Home extends React.Component {
-  state = { currentUser: null, lessonCredits: null, practiceCredits: null };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null,
+      lessonCredits: null,
+      practiceCredits: null,
+    };
+  }
+
+  //state = { currentUser: null, lessonCredits: null, practiceCredits: null };
 
   componentDidMount() {
+    this.loadInitialData();
+    this.willFocusListener = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        this.loadInitialData();
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.willFocusListener.remove();
+  }
+
+  loadInitialData = () => {
     const { currentUser } = Firebase.auth();
     this.setState({ currentUser });
 
@@ -28,7 +51,7 @@ export default class Home extends React.Component {
         this.setState({ lessonCredits: doc.data().lessonCredits });
         this.setState({ practiceCredits: doc.data().practiceCredits });
       });
-  }
+  };
 
   handleLessonCheckAndRedirect = () => {
     if (this.state.lessonCredits > 0) {
