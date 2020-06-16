@@ -7,6 +7,7 @@ import {
   View,
   Button,
   FlatList,
+  Alert,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -16,6 +17,8 @@ export default class Payment extends React.Component {
   state = {
     currentUser: null,
     price: null,
+    oldLessonCredits: null,
+    oldPracticeCredits: null,
     lessonCredits: null,
     practiceCredits: null,
   };
@@ -31,6 +34,58 @@ export default class Payment extends React.Component {
     this.setState({ practiceCredits });
   }
 
+  handlePayment = () => {
+    var userID = this.state.currentUser.uid;
+    console.log("User ID for payment is:" + userID);
+
+    // First perform the query
+    db.collection("shoppingCart")
+      .where("uid", "==", userID)
+      .get()
+      .then(function (querySnapshot) {
+        // Once we get the results, begin a batch
+        var batch = db.batch();
+
+        querySnapshot.forEach(function (doc) {
+          // For each doc, add a delete operation to the batch
+          batch.delete(doc.ref);
+        });
+        // Commit the batch
+        batch.commit();
+      })
+      .then(function () {
+        // Delete completed!
+      });
+
+    //get user's current practice and lesson credits and save to variables
+    db.collection("users")
+      .doc(userID)
+      .get()
+      .then((doc) => {
+        this.setState({ oldLessonCredits: doc.data().lessonCredits });
+        this.setState({ oldPracticeCredits: doc.data().practiceCredits });
+
+        //set user practice and lesson credits to current credits plus total credits from shopping cart
+        var newLessonCredits =
+          this.state.oldLessonCredits + this.state.lessonCredits;
+        var newPracticeCredits =
+          this.state.oldPracticeCredits + this.state.practiceCredits;
+
+        db.collection("users").doc(userID).update({
+          lessonCredits: newLessonCredits,
+        });
+        db.collection("users").doc(userID).update({
+          practiceCredits: newPracticeCredits,
+        });
+
+        //return to home screen
+        this.props.navigation.navigate("Home");
+      })
+      .then(
+        Alert.alert("Successful payment!", "Your credits have been updated.")
+      );
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -39,6 +94,7 @@ export default class Payment extends React.Component {
         <Text>Total Price: {this.state.price}</Text>
         <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
+        <Button title="Process Payment" onPress={this.handlePayment} />
       </View>
     );
   }
