@@ -4,6 +4,7 @@ import {
   Platform,
   Image,
   Text,
+  TextInput,
   View,
   Button,
   FlatList,
@@ -21,6 +22,10 @@ export default class Payment extends React.Component {
     oldPracticeCredits: null,
     lessonCredits: null,
     practiceCredits: null,
+    CCNum: null,
+    MM: null,
+    DD: null,
+    CSC: null,
   };
 
   componentDidMount() {
@@ -94,6 +99,44 @@ export default class Payment extends React.Component {
         <Text>Total Price: {this.state.price}</Text>
         <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
+
+        <Text>Credit Card Number</Text>
+        <TextInput
+          placeholder="Credit Card Number"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={(CCNum) => this.setState({ CCNum })}
+          value={this.state.CCNum}
+          maxLength="16"
+        />
+
+        <Text>Expiration Date</Text>
+        <TextInput
+          placeholder="MM"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={(MM) => this.setState({ MM })}
+          value={this.state.MM}
+          maxLength="2"
+        />
+        <TextInput
+          placeholder="DD"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={(DD) => this.setState({ DD })}
+          value={this.state.DD}
+          maxLength="2"
+        />
+
+        <Text>CSC</Text>
+        <TextInput
+          placeholder="CSC"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={(CSC) => this.setState({ CSC })}
+          value={this.state.CSC}
+          maxLength="3"
+        />
         <Button title="Process Payment" onPress={this.handlePayment} />
       </View>
     );
@@ -104,5 +147,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  textInput: {
+    height: 40,
+    width: "90%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
   },
 });
