@@ -7,6 +7,7 @@ import {
   View,
   Button,
   FlatList,
+  Alert,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -101,6 +102,25 @@ export default class ShoppingCart extends React.Component {
       .then(() => console.log(item.id + "deleted successfully!"));
   };
 
+  handleGoToPayment = () => {
+    if (
+      this.state.totalPrice == 0 &&
+      this.state.totalLessonCredits == 0 &&
+      this.state.totalLessonCredits == 0
+    ) {
+      Alert.alert(
+        "Empty Shopping Cart",
+        "Please add items to your shopping cart before proceeding to payment."
+      );
+    } else {
+      this.props.navigation.navigate("Payment", {
+        price: this.state.totalPrice,
+        lessonCredits: this.state.totalLessonCredits,
+        practiceCredits: this.state.totalPracticeCredits,
+      });
+    }
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -129,13 +149,7 @@ export default class ShoppingCart extends React.Component {
         />
         <Button
           title="Go to Payment"
-          onPress={() =>
-            this.props.navigation.navigate("Payment", {
-              price: this.state.totalPrice,
-              lessonCredits: this.state.totalLessonCredits,
-              practiceCredits: this.state.totalPracticeCredits,
-            })
-          }
+          onPress={() => this.handleGoToPayment()}
         />
       </View>
     );
