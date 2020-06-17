@@ -169,6 +169,7 @@ export default class Purchase extends React.Component {
               <TextInput
                 autoCapitalize="none"
                 placeholder="Qty"
+                style={styles.textInput}
                 item={item}
                 index={index}
                 onChangeText={(qty) => this.setRowQty(qty, item, index)}
@@ -204,5 +205,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  textInput: {
+    height: 40,
+    width: "90%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
   },
 });
