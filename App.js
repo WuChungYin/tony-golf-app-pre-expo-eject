@@ -12,6 +12,7 @@ import Purchase from "./screens/Purchase";
 import ShoppingCart from "./screens/ShoppingCart";
 import Payment from "./screens/Payment";
 import Reserve from "./screens/Reserve";
+import ViewApptSlots from "./screens/ViewApptSlots";
 import Settings from "./screens/Settings";
 import ViewReservations from "./screens/ViewReservations";
 
@@ -38,6 +39,7 @@ const HomeStackNavigator = createStackNavigator(
     ShoppingCart: { screen: ShoppingCart },
     Payment: { screen: Payment },
     Reserve: { screen: Reserve },
+    ViewApptSlots: { screen: ViewApptSlots },
   },
   { initialRouteName: "Home" }
 );
