@@ -46,6 +46,54 @@ export default class ViewReservations extends React.Component {
     console.log("appSlotsData = " + JSON.stringify(this.state.apptSlotsData));
   };
 
+  handleRemoveReservation = (index, item) => {
+    const userID = this.state.currentUser.uid;
+
+    //updating appt slot with "null" for uid field in Firebase
+    db.collection("appointments").doc(item.id).update({ uid: "null" });
+
+    //adding credits back to user after cancelling appt
+    if (item.type == "lesson") {
+      db.collection("users")
+        .doc(userID)
+        .get()
+        .then((doc) => {
+          var oldLessonCredits = doc.data().lessonCredits;
+          var newLessonCredits = oldLessonCredits + 1;
+          db.collection("users").doc(userID).update({
+            lessonCredits: newLessonCredits,
+          });
+          //return to home screen
+          this.props.navigation.navigate("Home");
+        })
+        .then(
+          Alert.alert(
+            "Successful cancellation!",
+            "Your credits have been updated."
+          )
+        );
+    } else {
+      db.collection("users")
+        .doc(userID)
+        .get()
+        .then((doc) => {
+          var oldPracticeCredits = doc.data().practiceCredits;
+          var newPracticeCredits = oldPracticeCredits + 1;
+          db.collection("users").doc(userID).update({
+            practiceCredits: newPracticeCredits,
+          });
+          //return to home screen
+          this.props.navigation.navigate("Home");
+        })
+        .then(
+          Alert.alert(
+            "Successful cancellation!",
+            "Your credits have been updated."
+          )
+        );
+    }
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -58,6 +106,11 @@ export default class ViewReservations extends React.Component {
               <Text>
                 {item.date} {item.time} {item.name}
               </Text>
+              <Button
+                title="Remove Reservation"
+                item={item}
+                onPress={() => this.handleRemoveReservation(index, item)}
+              />
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
