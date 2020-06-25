@@ -46,7 +46,7 @@ export default class ViewReservations extends React.Component {
     console.log("appSlotsData = " + JSON.stringify(this.state.apptSlotsData));
   };
 
-  handleRemoveReservation = (index, item) => {
+  handleCancelReservation = (index, item) => {
     const userID = this.state.currentUser.uid;
 
     //updating appt slot with "null" for uid field in Firebase
@@ -63,8 +63,6 @@ export default class ViewReservations extends React.Component {
           db.collection("users").doc(userID).update({
             lessonCredits: newLessonCredits,
           });
-          //return to home screen
-          this.props.navigation.navigate("Home");
         })
         .then(
           Alert.alert(
@@ -82,8 +80,6 @@ export default class ViewReservations extends React.Component {
           db.collection("users").doc(userID).update({
             practiceCredits: newPracticeCredits,
           });
-          //return to home screen
-          this.props.navigation.navigate("Home");
         })
         .then(
           Alert.alert(
@@ -107,9 +103,9 @@ export default class ViewReservations extends React.Component {
                 {item.date} {item.time} {item.name}
               </Text>
               <Button
-                title="Remove Reservation"
+                title="Cancel Reservation"
                 item={item}
-                onPress={() => this.handleRemoveReservation(index, item)}
+                onPress={() => this.handleCancelReservation(index, item)}
               />
             </View>
           )}
