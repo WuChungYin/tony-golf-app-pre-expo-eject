@@ -57,7 +57,10 @@ export default class ViewApptSlots extends React.Component {
     const userID = this.state.currentUser.uid;
 
     //updating appt slot with user id
-    db.collection("appointments").doc(item.id).update({ uid: userID });
+
+    var itemID = item.id;
+    console.log("updated appt slot id:" + item.id);
+    db.collection("appointments").doc(itemID).update({ uid: userID });
 
     //deducting credits from user after setting appt
     if (item.type == "lesson") {
@@ -105,7 +108,7 @@ export default class ViewApptSlots extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>This is ViewApptSlots Screen</Text>
+        <Text>This is ViewApptSlotss Screen</Text>
         <Text>
           Date:{this.state.date} Type:{this.state.type}
         </Text>
