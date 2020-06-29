@@ -43,7 +43,7 @@ export default class ShoppingCart extends React.Component {
   onCollectionUpdate = (querySnapshot) => {
     const shoppingCartData = [];
     querySnapshot.forEach((doc) => {
-      const { id, qty, price, credits, itemName, type, age, uid } = doc.data();
+      const { id, qty, price, credits, itemName, type, uid } = doc.data();
       shoppingCartData.push({
         id,
         qty,
@@ -51,7 +51,7 @@ export default class ShoppingCart extends React.Component {
         credits,
         itemName,
         type,
-        age,
+        //age,
         uid,
       });
     });

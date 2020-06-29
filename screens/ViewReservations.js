@@ -63,6 +63,8 @@ export default class ViewReservations extends React.Component {
           db.collection("users").doc(userID).update({
             lessonCredits: newLessonCredits,
           });
+          //return to home screen
+          this.props.navigation.navigate("Home");
         })
         .then(
           Alert.alert(
@@ -80,6 +82,8 @@ export default class ViewReservations extends React.Component {
           db.collection("users").doc(userID).update({
             practiceCredits: newPracticeCredits,
           });
+          //return to home screen
+          this.props.navigation.navigate("Home");
         })
         .then(
           Alert.alert(

@@ -11,7 +11,7 @@ export default class SignUp extends React.Component {
     phone: "",
     email: "",
     password: "",
-    dob: "01-01-2020",
+    //dob: "01-01-2020",
     errorMessage: null,
   };
   handleSignUp = () => {
@@ -24,7 +24,7 @@ export default class SignUp extends React.Component {
           lastName: this.state.lastName,
           phone: this.state.phone,
           email: this.state.email,
-          dob: this.state.dob,
+          //dob: this.state.dob,
           practiceCredits: 0,
           lessonCredits: 0,
         };
@@ -89,7 +89,7 @@ export default class SignUp extends React.Component {
           onChangeText={(email) => this.setState({ email })}
           value={this.state.email}
         />
-        <DatePicker
+        {/* <DatePicker
           style={{ width: 200 }}
           date={this.state.dob} //initial date from state
           mode="date" //The enum of date, datetime and time
@@ -113,7 +113,7 @@ export default class SignUp extends React.Component {
           onDateChange={(dob) => {
             this.setState({ dob: dob });
           }}
-        />
+        /> */}
         <TextInput
           secureTextEntry
           placeholder="Password"
