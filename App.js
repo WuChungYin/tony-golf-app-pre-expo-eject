@@ -10,6 +10,7 @@ import Login from "./screens/Login";
 import Home from "./screens/Home";
 import Purchase from "./screens/Purchase";
 import ShoppingCart from "./screens/ShoppingCart";
+import EditItemQty from "./screens/EditItemQty";
 import Payment from "./screens/Payment";
 import Reserve from "./screens/Reserve";
 import ViewApptSlots from "./screens/ViewApptSlots";
@@ -37,6 +38,7 @@ const HomeStackNavigator = createStackNavigator(
     Home: { screen: Home },
     Purchase: { screen: Purchase },
     ShoppingCart: { screen: ShoppingCart },
+    EditItemQty: { screen: EditItemQty },
     Payment: { screen: Payment },
     Reserve: { screen: Reserve },
     ViewApptSlots: { screen: ViewApptSlots },
