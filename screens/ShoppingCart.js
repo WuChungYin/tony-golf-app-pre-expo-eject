@@ -121,6 +121,10 @@ export default class ShoppingCart extends React.Component {
     }
   };
 
+  handleEditQuantity = (item) => {
+    this.props.navigation.navigate("EditItemQty", { item: item });
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -142,6 +146,11 @@ export default class ShoppingCart extends React.Component {
                 title="Delete Item"
                 item={item}
                 onPress={() => this.deleteItem(index, item)}
+              />
+              <Button
+                title="Edit Quantity"
+                item={item}
+                onPress={() => this.handleEditQuantity(item)}
               />
             </View>
           )}
