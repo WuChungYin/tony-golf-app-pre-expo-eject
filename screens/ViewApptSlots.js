@@ -108,7 +108,6 @@ export default class ViewApptSlots extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>This is ViewApptSlotss Screen</Text>
         <Text>
           Date:{this.state.date} Type:{this.state.type}
         </Text>
