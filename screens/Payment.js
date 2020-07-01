@@ -95,8 +95,7 @@ export default class Payment extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={{ flex: 1, paddingTop: 36 }}>
-        <Text>Hi {currentUser && currentUser.email}!</Text>
-        <Text>Total Price: {this.state.price}</Text>
+        <Text>Total Price: ${this.state.price}</Text>
         <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
 

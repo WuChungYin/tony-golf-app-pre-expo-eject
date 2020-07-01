@@ -129,18 +129,16 @@ export default class ShoppingCart extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={{ flex: 1, paddingTop: 36 }}>
-        <Text>Hi {currentUser && currentUser.email}!</Text>
-        <Text>Total Price:{this.state.totalPrice}</Text>
-        <Text>Total Lesson Credits:{this.state.totalLessonCredits}</Text>
-        <Text>Total Practice Credits:{this.state.totalPracticeCredits}</Text>
+        <Text>Total Price: ${this.state.totalPrice}</Text>
+        <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
+        <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
         <FlatList
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
             <View>
               <Text>
                 Qty:{item.qty} Price:${item.price} Credits:{item.credits} Item
-                Name:{item.itemName} UID:{item.uid} Index:
-                {index} itemID: {item.id}
+                Name:{item.itemName}
               </Text>
               <Button
                 title="Delete Item"
