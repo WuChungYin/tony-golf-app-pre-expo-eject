@@ -46,10 +46,24 @@ const HomeStackNavigator = createStackNavigator(
   { initialRouteName: "Home" }
 );
 
+const ViewReservationsStackNavigator = createStackNavigator(
+  {
+    ViewReservations: { screen: ViewReservations },
+  },
+  { initialRouteName: "ViewReservations" }
+);
+
+const SettingsStackNavigator = createStackNavigator(
+  {
+    Settings: { screen: Settings },
+  },
+  { initialRouteName: "Settings" }
+);
+
 const BottomTabNavigator = createBottomTabNavigator(
   {
     Settings: {
-      screen: Settings,
+      screen: SettingsStackNavigator,
       navigationOptions: {
         tabBarLabel: "Settings",
       },
@@ -61,7 +75,7 @@ const BottomTabNavigator = createBottomTabNavigator(
       },
     },
     ViewReservations: {
-      screen: ViewReservations,
+      screen: ViewReservationsStackNavigator,
       navigationOptions: {
         tabBarLabel: "View Reservations",
       },
