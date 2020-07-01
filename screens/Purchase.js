@@ -18,75 +18,100 @@ export default class Purchase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchaseItems: [
-        // {
-        //   id: 1,
-        //   price: 50,
-        //   credits: 10,
-        //   itemName: "Package - Adult Lessons",
-        //   age: "Adult",
-        //   type: "lesson",
-        // },
-        // {
-        //   id: 2,
-        //   price: 50,
-        //   credits: 10,
-        //   itemName: "Package - Junior Lessons",
-        //   age: "Junior",
-        //   type: "lesson",
-        // },
-        {
-          id: 1,
-          price: 50,
-          credits: 10,
-          itemName: "Package - Lessons",
-          type: "lesson",
-        },
-        {
-          id: 3,
-          price: 150,
-          credits: 30,
-          itemName: "Package - Practice Lane",
-          //age: null,
-          type: "practice",
-        },
-        // {
-        //   id: 4,
-        //   price: 5,
-        //   credits: 1,
-        //   itemName: "Single - Adult Lesson",
-        //   age: "Adult",
-        //   type: "lesson",
-        // },
-        // {
-        //   id: 5,
-        //   price: 5,
-        //   credits: 1,
-        //   itemName: "Single - Junior Lesson",
-        //   age: "Junior",
-        //   type: "lesson",
-        // },
-        {
-          id: 4,
-          price: 5,
-          credits: 1,
-          itemName: "Single - Lesson",
-          type: "lesson",
-        },
-        {
-          id: 6,
-          price: 5,
-          credits: 1,
-          itemName: "Single - Practice Lane",
-          //age: null,
-          type: "practice",
-        },
-      ],
+      // purchaseItems: [
+      //   // {
+      //   //   id: 1,
+      //   //   price: 50,
+      //   //   credits: 10,
+      //   //   itemName: "Package - Adult Lessons",
+      //   //   age: "Adult",
+      //   //   type: "lesson",
+      //   // },
+      //   // {
+      //   //   id: 2,
+      //   //   price: 50,
+      //   //   credits: 10,
+      //   //   itemName: "Package - Junior Lessons",
+      //   //   age: "Junior",
+      //   //   type: "lesson",
+      //   // },
+      //   {
+      //     id: 1,
+      //     price: 50,
+      //     credits: 10,
+      //     itemName: "Package - Lessons",
+      //     type: "lesson",
+      //   },
+      //   {
+      //     id: 3,
+      //     price: 150,
+      //     credits: 30,
+      //     itemName: "Package - Practice Lane",
+      //     //age: null,
+      //     type: "practice",
+      //   },
+      //   // {
+      //   //   id: 4,
+      //   //   price: 5,
+      //   //   credits: 1,
+      //   //   itemName: "Single - Adult Lesson",
+      //   //   age: "Adult",
+      //   //   type: "lesson",
+      //   // },
+      //   // {
+      //   //   id: 5,
+      //   //   price: 5,
+      //   //   credits: 1,
+      //   //   itemName: "Single - Junior Lesson",
+      //   //   age: "Junior",
+      //   //   type: "lesson",
+      //   // },
+      //   {
+      //     id: 4,
+      //     price: 5,
+      //     credits: 1,
+      //     itemName: "Single - Lesson",
+      //     type: "lesson",
+      //   },
+      //   {
+      //     id: 6,
+      //     price: 5,
+      //     credits: 1,
+      //     itemName: "Single - Practice Lane",
+      //     //age: null,
+      //     type: "practice",
+      //   },
+      // ],
+      purchaseItems: [],
       qtyArray: [],
     };
   }
 
   componentDidMount() {
+    this.unsubscribe = db
+      .collection("purchaseItems")
+      .onSnapshot(this.onCollectionUpdate);
+  }
+
+  collectionWillUnMount() {
+    this.unsubscribe();
+  }
+
+  onCollectionUpdate = (querySnapshot) => {
+    const purchaseItems = [];
+    querySnapshot.forEach((doc) => {
+      const { id, price, credits, itemName, type } = doc.data();
+      purchaseItems.push({
+        id,
+        price,
+        credits,
+        itemName,
+        type,
+      });
+    });
+    this.setState({ purchaseItems: purchaseItems });
+    console.log("purchaseItems = " + JSON.stringify(this.state.purchaseItems));
+
     //console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
     const numItems = this.state.purchaseItems.length;
     //console.log("numItems: " + numItems);
@@ -100,7 +125,7 @@ export default class Purchase extends React.Component {
     this.setState({ qtyArray: [...this.state.qtyArray, ...newArray] }, () =>
       console.log("qtyArray: " + this.state.qtyArray)
     );
-  }
+  };
 
   setRowQty = (qty, item, index) => {
     var intqty = parseInt(qty, 10); //10 means base-10
@@ -189,8 +214,8 @@ export default class Purchase extends React.Component {
                 onChangeText={(qty) => this.setRowQty(qty, item, index)}
               />
               <Text>
-                ${item.price} {item.credits} credits {item.itemName} Index:
-                {index}
+                Price: ${item.price} Credits: {item.credits} Item:{" "}
+                {item.itemName}
               </Text>
             </View>
           )}
