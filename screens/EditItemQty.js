@@ -27,17 +27,28 @@ export default class EditItemQty extends React.Component {
 
   handleUpdateQty = () => {
     //check this.state.newQty to make sure it isn't null or 0
-
-    db.collection("shoppingCart")
-      .doc(this.state.itemID)
-      .update({ qty: this.state.newQty })
-      .then(this.props.navigation.navigate("ShoppingCart"))
-      .then(
-        Alert.alert(
-          "Update successful!",
-          "The quantity of this item as been successfully updated."
-        )
+    if (
+      !isNaN(this.state.newQty) &&
+      this.state.newQty != null &&
+      this.state.newQty != 0 &&
+      this.state.newQty != ""
+    ) {
+      db.collection("shoppingCart")
+        .doc(this.state.itemID)
+        .update({ qty: this.state.newQty })
+        .then(this.props.navigation.navigate("ShoppingCart"))
+        .then(
+          Alert.alert(
+            "Update successful!",
+            "The quantity of this item as been successfully updated."
+          )
+        );
+    } else {
+      Alert.alert(
+        "Invalid input!",
+        "Please input a number for the updated quantity."
       );
+    }
   };
 
   render() {
