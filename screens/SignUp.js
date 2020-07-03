@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import { StyleSheet, Text, TextInput, View, Button, Alert } from "react-native";
 import DatePicker from "react-native-datepicker";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -14,46 +14,51 @@ export default class SignUp extends React.Component {
     //dob: "01-01-2020",
     errorMessage: null,
   };
-  handleSignUp = () => {
-    Firebase.auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then((credentials) => {
-        const user = {
-          uid: credentials.user.uid,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          phone: this.state.phone,
-          email: this.state.email,
-          //dob: this.state.dob,
-          practiceCredits: 0,
-          lessonCredits: 0,
-        };
-        console.log(credentials.user.uid);
-        db.collection("users")
-          .doc(credentials.user.uid)
-          .set(user)
-          .then(() => {
-            console.log("Succesfully set!");
-          })
-          .catch((error) => console.log("Error with set" + error.message));
-      })
-      .then(() => this.props.navigation.navigate("Home"))
-      .catch((error) => this.setState({ errorMessage: error.message }));
 
-    // if (Firebase.auth().currentUser.uid) {
-    //   const user = {
-    //     uid: Firebase.auth().currentUser.uid,
-    //     firstName: this.state.firstName,
-    //     lastName: this.state.lastName,
-    //     phone: this.state.phone,
-    //     email: this.state.email,
-    //     dob: this.state.dob,
-    //     practiceCredits: 0,
-    //     lessonCredits: 0,
-    //   };
-    //   db.collection("users").doc(response.user.uid).set(user);
-    // }
+  handleSignUp = () => {
+    if (this.state.firstName != "") {
+      if (this.state.lastName != "") {
+        if (this.state.phone != "") {
+          Firebase.auth()
+            .createUserWithEmailAndPassword(
+              this.state.email,
+              this.state.password
+            )
+            .then((credentials) => {
+              const user = {
+                uid: credentials.user.uid,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phone: this.state.phone,
+                email: this.state.email,
+                //dob: this.state.dob,
+                practiceCredits: 0,
+                lessonCredits: 0,
+              };
+              console.log(credentials.user.uid);
+              db.collection("users")
+                .doc(credentials.user.uid)
+                .set(user)
+                .then(() => {
+                  console.log("Succesfully set!");
+                })
+                .catch((error) =>
+                  console.log("Error with set" + error.message)
+                );
+            })
+            .then(() => this.props.navigation.navigate("Home"))
+            .catch((error) => this.setState({ errorMessage: error.message }));
+        } else {
+          Alert.alert("Empty Required Field!", "Please input a phone number.");
+        }
+      } else {
+        Alert.alert("Empty Required Field!", "Please input a last name.");
+      }
+    } else {
+      Alert.alert("Empty Required Field!", "Please input a first name.");
+    }
   };
+
   render() {
     return (
       <View style={styles.container}>
