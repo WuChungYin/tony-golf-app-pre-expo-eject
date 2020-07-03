@@ -18,8 +18,6 @@ export default class Payment extends React.Component {
   state = {
     currentUser: null,
     price: null,
-    oldLessonCredits: null,
-    oldPracticeCredits: null,
     lessonCredits: null,
     practiceCredits: null,
     CCNum: null,
@@ -40,55 +38,93 @@ export default class Payment extends React.Component {
   }
 
   handlePayment = () => {
-    var userID = this.state.currentUser.uid;
-    console.log("User ID for payment is:" + userID);
+    if (
+      !isNaN(this.state.CCNum) &&
+      this.state.CCNum != null &&
+      this.state.CCNum != ""
+    ) {
+      if (
+        !isNaN(this.state.MM) &&
+        this.state.MM != null &&
+        this.state.MM != "" &&
+        this.state.MM > 0 &&
+        this.state.MM < 13
+      ) {
+        if (
+          !isNaN(this.state.DD) &&
+          this.state.DD != null &&
+          this.state.DD != "" &&
+          this.state.DD > 0 &&
+          this.state.DD < 32
+        ) {
+          if (
+            !isNaN(this.state.CSC) &&
+            this.state.CSC != null &&
+            this.state.CSC != ""
+          ) {
+            var userID = this.state.currentUser.uid;
+            console.log("User ID for payment is:" + userID);
 
-    // First perform the query
-    db.collection("shoppingCart")
-      .where("uid", "==", userID)
-      .get()
-      .then(function (querySnapshot) {
-        // Once we get the results, begin a batch
-        var batch = db.batch();
+            //deleting shoppingCart items for curent user in Firebase
+            db.collection("shoppingCart")
+              .where("uid", "==", userID)
+              .get()
+              .then(function (querySnapshot) {
+                // Once we get the results, begin a batch
+                var batch = db.batch();
 
-        querySnapshot.forEach(function (doc) {
-          // For each doc, add a delete operation to the batch
-          batch.delete(doc.ref);
-        });
-        // Commit the batch
-        batch.commit();
-      })
-      .then(function () {
-        // Delete completed!
-      });
+                querySnapshot.forEach(function (doc) {
+                  // For each doc, add a delete operation to the batch
+                  batch.delete(doc.ref);
+                });
+                // Commit the batch
+                batch.commit();
+              })
+              .then(function () {
+                // Delete completed!
+              });
 
-    //get user's current practice and lesson credits and save to variables
-    db.collection("users")
-      .doc(userID)
-      .get()
-      .then((doc) => {
-        this.setState({ oldLessonCredits: doc.data().lessonCredits });
-        this.setState({ oldPracticeCredits: doc.data().practiceCredits });
+            //get user's current practice and lesson credits and save to variables
+            db.collection("users")
+              .doc(userID)
+              .get()
+              .then((doc) => {
+                var oldLessonCredits = doc.data().lessonCredits;
+                var oldPracticeCredits = doc.data().practiceCredits;
+                //set user practice and lesson credits to current credits plus total credits from shopping cart
+                var newLessonCredits =
+                  oldLessonCredits + this.state.lessonCredits;
+                var newPracticeCredits =
+                  oldPracticeCredits + this.state.practiceCredits;
 
-        //set user practice and lesson credits to current credits plus total credits from shopping cart
-        var newLessonCredits =
-          this.state.oldLessonCredits + this.state.lessonCredits;
-        var newPracticeCredits =
-          this.state.oldPracticeCredits + this.state.practiceCredits;
+                db.collection("users").doc(userID).update({
+                  lessonCredits: newLessonCredits,
+                });
+                db.collection("users").doc(userID).update({
+                  practiceCredits: newPracticeCredits,
+                });
 
-        db.collection("users").doc(userID).update({
-          lessonCredits: newLessonCredits,
-        });
-        db.collection("users").doc(userID).update({
-          practiceCredits: newPracticeCredits,
-        });
-
-        //return to home screen
-        this.props.navigation.navigate("Home");
-      })
-      .then(
-        Alert.alert("Successful payment!", "Your credits have been updated.")
-      );
+                //return to home screen
+                this.props.navigation.navigate("Home");
+              })
+              .then(
+                Alert.alert(
+                  "Successful payment!",
+                  "Your credits have been updated."
+                )
+              );
+          } else {
+            Alert.alert("Invalid input!", "Please input a valid CSC.");
+          }
+        } else {
+          Alert.alert("Invalid input!", "Please input a valid day in DD form.");
+        }
+      } else {
+        Alert.alert("Invalid input!", "Please input a valid month in MM form.");
+      }
+    } else {
+      Alert.alert("Invalid input!", "Please input a valid credit card number.");
+    }
   };
 
   render() {
