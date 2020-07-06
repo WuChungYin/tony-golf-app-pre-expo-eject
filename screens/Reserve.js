@@ -39,24 +39,26 @@ export default class Reserve extends React.Component {
             this.setState({ date: date });
           }}
         />
-        <Button
-          title="View Available Lesson Slots"
-          onPress={() =>
-            this.props.navigation.navigate("ViewApptSlots", {
-              date: this.state.date,
-              type: "lesson",
-            })
-          }
-        />
-        <Button
-          title="View Available Practice Lane Slots"
-          onPress={() =>
-            this.props.navigation.navigate("ViewApptSlots", {
-              date: this.state.date,
-              type: "practice",
-            })
-          }
-        />
+        <View style={styles.buttons}>
+          <Button
+            title="Lessons"
+            onPress={() =>
+              this.props.navigation.navigate("ViewApptSlots", {
+                date: this.state.date,
+                type: "lesson",
+              })
+            }
+          />
+          <Button
+            title="Practice Lanes"
+            onPress={() =>
+              this.props.navigation.navigate("ViewApptSlots", {
+                date: this.state.date,
+                type: "practice",
+              })
+            }
+          />
+        </View>
       </View>
     );
   }
@@ -67,4 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  buttons: { flexDirection: "row" },
 });

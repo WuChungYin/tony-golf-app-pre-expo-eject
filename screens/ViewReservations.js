@@ -98,7 +98,6 @@ export default class ViewReservations extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>This is View Reservations Screen</Text>
         <FlatList
           data={this.state.apptSlotsData}
           renderItem={({ item, index }) => (

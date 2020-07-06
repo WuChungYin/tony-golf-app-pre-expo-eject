@@ -128,28 +128,33 @@ export default class ShoppingCart extends React.Component {
   render() {
     const { currentUser } = this.state;
     return (
-      <View style={{ flex: 1, paddingTop: 36 }}>
-        <Text>Total Price: ${this.state.totalPrice}</Text>
-        <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
-        <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
+      <View style={styles.container}>
+        <View>
+          <Text>Total Price: ${this.state.totalPrice}</Text>
+          <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
+          <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
+        </View>
+
         <FlatList
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
             <View>
+              <Text>Item: {item.itemName}</Text>
               <Text>
-                Qty:{item.qty} Price:${item.price} Credits:{item.credits} Item
-                Name:{item.itemName}
+                Qty: {item.qty} Price: ${item.price} Credits: {item.credits}
               </Text>
-              <Button
-                title="Delete Item"
-                item={item}
-                onPress={() => this.deleteItem(index, item)}
-              />
-              <Button
-                title="Edit Quantity"
-                item={item}
-                onPress={() => this.handleEditQuantity(item)}
-              />
+              <View style={styles.editDelete}>
+                <Button
+                  title="Edit Quantity"
+                  item={item}
+                  onPress={() => this.handleEditQuantity(item)}
+                />
+                <Button
+                  title="Delete Item"
+                  item={item}
+                  onPress={() => this.deleteItem(index, item)}
+                />
+              </View>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -165,7 +170,12 @@ export default class ShoppingCart extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+  },
+
+  editDelete: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
 });

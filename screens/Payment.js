@@ -22,7 +22,7 @@ export default class Payment extends React.Component {
     practiceCredits: null,
     CCNum: null,
     MM: null,
-    DD: null,
+    YY: null,
     CSC: null,
   };
 
@@ -51,11 +51,11 @@ export default class Payment extends React.Component {
         this.state.MM < 13
       ) {
         if (
-          !isNaN(this.state.DD) &&
-          this.state.DD != null &&
-          this.state.DD != "" &&
-          this.state.DD > 0 &&
-          this.state.DD < 32
+          !isNaN(this.state.YY) &&
+          this.state.YY != null &&
+          this.state.YY != "" &&
+          this.state.YY > 0 &&
+          this.state.YY < 32
         ) {
           if (
             !isNaN(this.state.CSC) &&
@@ -117,7 +117,7 @@ export default class Payment extends React.Component {
             Alert.alert("Invalid input!", "Please input a valid CSC.");
           }
         } else {
-          Alert.alert("Invalid input!", "Please input a valid day in DD form.");
+          Alert.alert("Invalid input!", "Please input a valid day in YY form.");
         }
       } else {
         Alert.alert("Invalid input!", "Please input a valid month in MM form.");
@@ -130,7 +130,7 @@ export default class Payment extends React.Component {
   render() {
     const { currentUser } = this.state;
     return (
-      <View style={{ flex: 1, paddingTop: 36 }}>
+      <View style={{ flex: 1 }}>
         <Text>Total Price: ${this.state.price}</Text>
         <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
@@ -139,29 +139,32 @@ export default class Payment extends React.Component {
         <TextInput
           placeholder="Credit Card Number"
           autoCapitalize="none"
-          style={styles.textInput}
+          style={styles.textInputCC}
           onChangeText={(CCNum) => this.setState({ CCNum })}
           value={this.state.CCNum}
           maxLength="16"
         />
 
         <Text>Expiration Date</Text>
-        <TextInput
-          placeholder="MM"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={(MM) => this.setState({ MM })}
-          value={this.state.MM}
-          maxLength="2"
-        />
-        <TextInput
-          placeholder="DD"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={(DD) => this.setState({ DD })}
-          value={this.state.DD}
-          maxLength="2"
-        />
+        <View style={styles.expirationDateRow}>
+          <TextInput
+            placeholder="MM"
+            autoCapitalize="none"
+            style={styles.textInput}
+            onChangeText={(MM) => this.setState({ MM })}
+            value={this.state.MM}
+            maxLength="2"
+          />
+          <Text></Text>
+          <TextInput
+            placeholder="YY"
+            autoCapitalize="none"
+            style={styles.textInput}
+            onChangeText={(YY) => this.setState({ YY })}
+            value={this.state.YY}
+            maxLength="2"
+          />
+        </View>
 
         <Text>CSC</Text>
         <TextInput
@@ -183,9 +186,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  expirationDateRow: { flexDirection: "row" },
+  textInputCC: {
+    height: 40,
+    width: 300,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+  },
   textInput: {
     height: 40,
-    width: "90%",
+    width: 40,
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
