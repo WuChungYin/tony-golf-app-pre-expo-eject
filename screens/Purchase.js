@@ -200,11 +200,11 @@ export default class Purchase extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, paddingTop: 36 }}>
+      <View style={styles.container}>
         <FlatList
           data={this.state.purchaseItems}
           renderItem={({ item, index }) => (
-            <View>
+            <View style={styles.inputRow}>
               <TextInput
                 autoCapitalize="none"
                 placeholder="Qty"
@@ -213,10 +213,12 @@ export default class Purchase extends React.Component {
                 index={index}
                 onChangeText={(qty) => this.setRowQty(qty, item, index)}
               />
-              <Text>
-                Price: ${item.price} Credits: {item.credits} Item:{" "}
-                {item.itemName}
-              </Text>
+              <View>
+                <Text>Item: {item.itemName}</Text>
+                <Text>
+                  Price: ${item.price} Credits: {item.credits}
+                </Text>
+              </View>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -242,12 +244,11 @@ export default class Purchase extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
+  inputRow: { flexDirection: "row" },
   textInput: {
     height: 40,
-    width: "90%",
+    width: "10%",
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,

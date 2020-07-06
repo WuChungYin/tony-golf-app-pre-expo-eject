@@ -108,9 +108,6 @@ export default class ViewApptSlots extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>
-          Date:{this.state.date} Type:{this.state.type}
-        </Text>
         <FlatList
           data={this.state.apptSlotsData}
           renderItem={({ item, index }) => (

@@ -55,11 +55,16 @@ export default class EditItemQty extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>Current Quantity:{this.state.itemQty}</Text>
-        <TextInput
-          placeholder="New Quantity"
-          onChangeText={(newQty) => this.setState({ newQty })}
-        />
+        <Text>Current Quantity: {this.state.itemQty}</Text>
+        <View style={styles.textContainer}>
+          <Text>New Quantity: </Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder=""
+            onChangeText={(newQty) => this.setState({ newQty })}
+          />
+        </View>
+
         <Button title="Update Quantiy" onPress={() => this.handleUpdateQty()} />
       </View>
     );
@@ -68,7 +73,16 @@ export default class EditItemQty extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+  },
+  textContainer: { flexDirection: "row" },
+  textInput: {
+    height: 40,
+    width: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
   },
 });
