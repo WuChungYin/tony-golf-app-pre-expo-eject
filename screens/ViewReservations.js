@@ -98,7 +98,9 @@ export default class ViewReservations extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
+        <Text>Below are your scheduled reservations:</Text>
         <FlatList
+          style={styles.list}
           data={this.state.apptSlotsData}
           renderItem={({ item, index }) => (
             <View>
@@ -123,5 +125,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "lightgreen",
+  },
+  list: {
+    backgroundColor: "mediumspringgreen",
   },
 });

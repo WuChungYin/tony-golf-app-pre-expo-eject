@@ -130,7 +130,7 @@ export default class Payment extends React.Component {
   render() {
     const { currentUser } = this.state;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <Text>Total Price: ${this.state.price}</Text>
         <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
@@ -183,8 +183,7 @@ export default class Payment extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "lightgreen",
   },
   expirationDateRow: { flexDirection: "row" },
   textInputCC: {
@@ -193,6 +192,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
   textInput: {
     height: 40,
@@ -200,5 +200,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
 });

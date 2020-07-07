@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "lightgreen",
   },
   textInput: {
     height: 40,
@@ -148,5 +149,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
 });

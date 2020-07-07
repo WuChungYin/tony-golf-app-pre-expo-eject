@@ -244,6 +244,7 @@ export default class Purchase extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "lightgreen",
   },
   inputRow: { flexDirection: "row" },
   textInput: {
@@ -252,5 +253,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
 });
