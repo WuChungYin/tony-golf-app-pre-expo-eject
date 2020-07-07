@@ -136,6 +136,7 @@ export default class ShoppingCart extends React.Component {
         </View>
 
         <FlatList
+          style={styles.list}
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
             <View>
@@ -143,7 +144,7 @@ export default class ShoppingCart extends React.Component {
               <Text>
                 Qty: {item.qty} Price: ${item.price} Credits: {item.credits}
               </Text>
-              <View style={styles.editDelete}>
+              <View style={styles.editDeleteButtons}>
                 <Button
                   title="Edit Quantity"
                   item={item}
@@ -170,9 +171,12 @@ export default class ShoppingCart extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "lightgreen",
   },
-
-  editDelete: {
+  list: {
+    backgroundColor: "mediumspringgreen",
+  },
+  editDeleteButtons: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",

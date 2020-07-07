@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "lightgreen",
   },
   textContainer: { flexDirection: "row" },
   textInput: {
@@ -84,5 +85,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
 });
