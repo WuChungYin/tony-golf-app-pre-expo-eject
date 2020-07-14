@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Platform, Image, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Platform,
+  Image,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 
 import Firebase from "../config/Firebase.js";
 
@@ -26,7 +34,10 @@ export default class Settings extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Hi {currentUser && currentUser.email}!</Text>
-        <Button title="Logout" onPress={this.handleLogout} />
+        {/* <Button title="Logout" onPress={this.handleLogout} /> */}
+        <TouchableOpacity onPress={this.handleLogout}>
+          <Text style={styles.buttonStyles}>Log Out</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -37,5 +48,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "lightgreen",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

@@ -8,6 +8,7 @@ import {
   Button,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -107,11 +108,17 @@ export default class ViewReservations extends React.Component {
               <Text>
                 {item.date} {item.time} {item.name}
               </Text>
-              <Button
+              {/* <Button
                 title="Cancel Reservation"
                 item={item}
                 onPress={() => this.handleCancelReservation(index, item)}
-              />
+              /> */}
+              <TouchableOpacity
+                item={item}
+                onPress={() => this.handleCancelReservation(index, item)}
+              >
+                <Text style={styles.buttonStyles}>Cancel Reservation</Text>
+              </TouchableOpacity>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -129,5 +136,17 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: "mediumspringgreen",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

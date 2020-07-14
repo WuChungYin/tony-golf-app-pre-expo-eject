@@ -9,6 +9,7 @@ import {
   Button,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -175,7 +176,10 @@ export default class Payment extends React.Component {
           value={this.state.CSC}
           maxLength="3"
         />
-        <Button title="Process Payment" onPress={this.handlePayment} />
+        {/* <Button title="Process Payment" onPress={this.handlePayment} /> */}
+        <TouchableOpacity onPress={this.handlePayment}>
+          <Text style={styles.buttonStyles}>Process Payment</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -201,5 +205,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 8,
     backgroundColor: "white",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });
