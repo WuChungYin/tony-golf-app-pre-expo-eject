@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Platform, Image, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Platform,
+  Image,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import DatePicker from "react-native-datepicker";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -44,7 +52,7 @@ export default class Reserve extends React.Component {
             }}
           />
           <View style={styles.buttons}>
-            <Button
+            {/* <Button
               title="Lessons"
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -52,8 +60,18 @@ export default class Reserve extends React.Component {
                   type: "lesson",
                 })
               }
-            />
-            <Button
+            /> */}
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate("ViewApptSlots", {
+                  date: this.state.date,
+                  type: "lesson",
+                })
+              }
+            >
+              <Text style={styles.buttonStyles}>Lessons</Text>
+            </TouchableOpacity>
+            {/* <Button
               title="Practice Lanes"
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -61,7 +79,17 @@ export default class Reserve extends React.Component {
                   type: "practice",
                 })
               }
-            />
+            /> */}
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate("ViewApptSlots", {
+                  date: this.state.date,
+                  type: "practice",
+                })
+              }
+            >
+              <Text style={styles.buttonStyles}>Practice Lanes</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -76,4 +104,16 @@ const styles = StyleSheet.create({
   dateAndButtons: { justifyContent: "center", alignItems: "center" },
   datePicker: { width: 200, backgroundColor: "white" },
   buttons: { flexDirection: "row" },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
+  },
 });

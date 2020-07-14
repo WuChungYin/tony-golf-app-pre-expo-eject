@@ -8,6 +8,7 @@ import {
   Button,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -121,11 +122,17 @@ export default class ViewApptSlots extends React.Component {
                 {item.date} {item.time} {item.name} Credits:
                 {item.credits}
               </Text>
-              <Button
+              {/* <Button
                 title="Select Appointment Slot"
                 item={item}
                 onPress={() => this.selectApptSlot(index, item)}
-              />
+              /> */}
+              <TouchableOpacity
+                item={item}
+                onPress={() => this.selectApptSlot(index, item)}
+              >
+                <Text style={styles.buttonStyles}>Reserve Slot</Text>
+              </TouchableOpacity>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -143,5 +150,17 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: "mediumspringgreen",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

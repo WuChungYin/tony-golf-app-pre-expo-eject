@@ -8,6 +8,7 @@ import {
   Button,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -145,25 +146,40 @@ export default class ShoppingCart extends React.Component {
                 Qty: {item.qty} Price: ${item.price} Credits: {item.credits}
               </Text>
               <View style={styles.editDeleteButtons}>
-                <Button
+                {/* <Button
                   title="Edit Quantity"
                   item={item}
                   onPress={() => this.handleEditQuantity(item)}
-                />
-                <Button
+                /> */}
+                <TouchableOpacity
+                  item={item}
+                  onPress={() => this.handleEditQuantity(item)}
+                >
+                  <Text style={styles.buttonStyles}>Edit Quantity</Text>
+                </TouchableOpacity>
+                {/* <Button
                   title="Delete Item"
                   item={item}
                   onPress={() => this.deleteItem(index, item)}
-                />
+                /> */}
+                <TouchableOpacity
+                  item={item}
+                  onPress={() => this.deleteItem(index, item)}
+                >
+                  <Text style={styles.buttonStyles}>Delete Item</Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Button
+        {/* <Button
           title="Go to Payment"
           onPress={() => this.handleGoToPayment()}
-        />
+        /> */}
+        <TouchableOpacity onPress={() => this.handleGoToPayment()}>
+          <Text style={styles.buttonStyles}>Go to Payment</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -181,5 +197,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

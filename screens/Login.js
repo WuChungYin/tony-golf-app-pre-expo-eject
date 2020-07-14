@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 
 import Firebase from "../config/Firebase.js";
 
@@ -34,7 +41,14 @@ export default class Login extends React.Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Login" onPress={this.handleLogin} />
+        {/* <Button
+          title="Login"
+          backgroundColor="red"
+          onPress={this.handleLogin}
+        /> */}
+        <TouchableOpacity onPress={this.handleLogin}>
+          <Text style={styles.buttonStyles}>Login</Text>
+        </TouchableOpacity>
         <Button
           title="Don't have an account? Sign Up"
           onPress={() => this.props.navigation.navigate("SignUp")}
@@ -57,5 +71,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 8,
     backgroundColor: "white",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

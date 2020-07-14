@@ -9,6 +9,7 @@ import {
   Button,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -223,7 +224,7 @@ export default class Purchase extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Button
+        {/* <Button
           title="Add to Shopping Cart"
           onPress={() =>
             this.addToShoppingCart(
@@ -231,11 +232,26 @@ export default class Purchase extends React.Component {
               this.state.purchaseItems
             )
           }
-        />
-        <Button
+        /> */}
+        <TouchableOpacity
+          onPress={() =>
+            this.addToShoppingCart(
+              this.state.qtyArray,
+              this.state.purchaseItems
+            )
+          }
+        >
+          <Text style={styles.buttonStyles}>Add to Shopping Cart</Text>
+        </TouchableOpacity>
+        {/* <Button
           title="View Shopping Cart"
           onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("ShoppingCart")}
+        >
+          <Text style={styles.buttonStyles}>View Shopping Cart</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -254,5 +270,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 8,
     backgroundColor: "white",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

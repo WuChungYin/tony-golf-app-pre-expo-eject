@@ -8,6 +8,7 @@ import {
   View,
   Button,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -56,16 +57,16 @@ export default class EditItemQty extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Current Quantity: {this.state.itemQty}</Text>
-        <View style={styles.textContainer}>
-          <Text>New Quantity: </Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder=""
-            onChangeText={(newQty) => this.setState({ newQty })}
-          />
-        </View>
-
-        <Button title="Update Quantiy" onPress={() => this.handleUpdateQty()} />
+        <Text>Enter new quantity below: </Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder=""
+          onChangeText={(newQty) => this.setState({ newQty })}
+        />
+        {/* <Button title="Update Quantiy" onPress={() => this.handleUpdateQty()} /> */}
+        <TouchableOpacity onPress={() => this.handleUpdateQty()}>
+          <Text style={styles.buttonStyles}>Update Quantity</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
-  textContainer: { flexDirection: "row" },
+  //textContainer: { flexDirection: "row" },
   textInput: {
     height: 40,
     width: 40,
@@ -86,5 +87,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 8,
     backgroundColor: "white",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

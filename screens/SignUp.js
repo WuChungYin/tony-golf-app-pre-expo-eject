@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import DatePicker from "react-native-datepicker";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -127,7 +135,10 @@ export default class SignUp extends React.Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
+        {/* <Button title="Sign Up" onPress={this.handleSignUp} /> */}
+        <TouchableOpacity onPress={this.handleSignUp}>
+          <Text style={styles.buttonStyles}>Sign Up</Text>
+        </TouchableOpacity>
         <Button
           title="Already have an account? Login"
           onPress={() => this.props.navigation.navigate("Login")}
@@ -150,5 +161,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 8,
     backgroundColor: "white",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });

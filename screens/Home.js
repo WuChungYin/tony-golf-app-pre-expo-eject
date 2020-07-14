@@ -7,6 +7,7 @@ import {
   View,
   Button,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
@@ -106,22 +107,38 @@ export default class Home extends React.Component {
         <Text>Hi {currentUser && currentUser.email}!</Text>
         <Text>Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Practice Credits: {this.state.practiceCredits}</Text>
-        <Button
+        {/* <Button
           title="Reserve Lesson"
           onPress={this.handleLessonCheckAndRedirect}
-        />
-        <Button
+        /> */}
+        <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
+          <Text style={styles.buttonStyles}>Reserve Lesson</Text>
+        </TouchableOpacity>
+        {/* <Button
           title="Reserve Practice Lane"
           onPress={this.handlePracticeCheckAndRedirect}
-        />
-        <Button
+        /> */}
+        <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
+          <Text style={styles.buttonStyles}>Reserve Practice Lane</Text>
+        </TouchableOpacity>
+        {/* <Button
           title="Purchase Credits"
           onPress={() => this.props.navigation.navigate("Purchase")}
-        />
-        <Button
+        /> */}
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("Purchase")}
+        >
+          <Text style={styles.buttonStyles}>Purchase Credits</Text>
+        </TouchableOpacity>
+        {/* <Button
           title="View Shopping Cart"
           onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("ShoppingCart")}
+        >
+          <Text style={styles.buttonStyles}>View Shopping Cart</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -132,5 +149,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "lightgreen",
+  },
+  buttonStyles: {
+    backgroundColor: "blue",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
   },
 });
