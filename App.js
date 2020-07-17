@@ -88,7 +88,12 @@ const HomeStackNavigator = createStackNavigator(
 
 const ViewReservationsStackNavigator = createStackNavigator(
   {
-    ViewReservations: { screen: ViewReservations },
+    ViewReservations: {
+      screen: ViewReservations,
+      navigationOptions: () => ({
+        title: `View Reservations`,
+      }),
+    },
   },
   { initialRouteName: "ViewReservations" }
 );
