@@ -27,8 +27,18 @@ if (!global.atob) {
 
 const LoginStackNavigator = createStackNavigator(
   {
-    Login: { screen: Login },
-    SignUp: { screen: SignUp },
+    Login: {
+      screen: Login,
+      navigationOptions: () => ({
+        title: `Log In`,
+      }),
+    },
+    SignUp: {
+      screen: SignUp,
+      navigationOptions: () => ({
+        title: `Sign Up`,
+      }),
+    },
   },
   { initialRouteName: "Login" }
 );
@@ -36,12 +46,42 @@ const LoginStackNavigator = createStackNavigator(
 const HomeStackNavigator = createStackNavigator(
   {
     Home: { screen: Home },
-    Purchase: { screen: Purchase },
-    ShoppingCart: { screen: ShoppingCart },
-    EditItemQty: { screen: EditItemQty },
-    Payment: { screen: Payment },
-    Reserve: { screen: Reserve },
-    ViewApptSlots: { screen: ViewApptSlots },
+    Purchase: {
+      screen: Purchase,
+      navigationOptions: () => ({
+        title: `Select Purchases`,
+      }),
+    },
+    ShoppingCart: {
+      screen: ShoppingCart,
+      navigationOptions: () => ({
+        title: `Shopping Cart`,
+      }),
+    },
+    EditItemQty: {
+      screen: EditItemQty,
+      navigationOptions: () => ({
+        title: `Edit Item Quantity`,
+      }),
+    },
+    Payment: {
+      screen: Payment,
+      navigationOptions: () => ({
+        title: `Payment`,
+      }),
+    },
+    Reserve: {
+      screen: Reserve,
+      navigationOptions: () => ({
+        title: `Reserve Lessons or Lanes`,
+      }),
+    },
+    ViewApptSlots: {
+      screen: ViewApptSlots,
+      navigationOptions: () => ({
+        title: `View Appointments`,
+      }),
+    },
   },
   { initialRouteName: "Home" }
 );

@@ -21,7 +21,9 @@ export default class Reserve extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>
+        <Text
+          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
+        >
           Please select the date and type of appointment you would like to
           reserve.
         </Text>
@@ -52,15 +54,6 @@ export default class Reserve extends React.Component {
             }}
           />
           <View style={styles.buttons}>
-            {/* <Button
-              title="Lessons"
-              onPress={() =>
-                this.props.navigation.navigate("ViewApptSlots", {
-                  date: this.state.date,
-                  type: "lesson",
-                })
-              }
-            /> */}
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -71,15 +64,7 @@ export default class Reserve extends React.Component {
             >
               <Text style={styles.buttonStyles}>Lessons</Text>
             </TouchableOpacity>
-            {/* <Button
-              title="Practice Lanes"
-              onPress={() =>
-                this.props.navigation.navigate("ViewApptSlots", {
-                  date: this.state.date,
-                  type: "practice",
-                })
-              }
-            /> */}
+
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -101,9 +86,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
-  dateAndButtons: { justifyContent: "center", alignItems: "center" },
+  dateAndButtons: {
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   datePicker: { width: 200, backgroundColor: "white" },
-  buttons: { flexDirection: "row" },
+  buttons: { padding: 10, flexDirection: "row" },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

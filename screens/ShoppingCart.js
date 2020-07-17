@@ -130,38 +130,30 @@ export default class ShoppingCart extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <View>
+        <View
+          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
+        >
           <Text>Total Price: ${this.state.totalPrice}</Text>
           <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
           <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
         </View>
 
         <FlatList
-          style={styles.list}
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
-            <View>
+            <View style={styles.listItem}>
               <Text>Item: {item.itemName}</Text>
               <Text>
                 Qty: {item.qty} Price: ${item.price} Credits: {item.credits}
               </Text>
               <View style={styles.editDeleteButtons}>
-                {/* <Button
-                  title="Edit Quantity"
-                  item={item}
-                  onPress={() => this.handleEditQuantity(item)}
-                /> */}
                 <TouchableOpacity
                   item={item}
                   onPress={() => this.handleEditQuantity(item)}
                 >
                   <Text style={styles.buttonStyles}>Edit Quantity</Text>
                 </TouchableOpacity>
-                {/* <Button
-                  title="Delete Item"
-                  item={item}
-                  onPress={() => this.deleteItem(index, item)}
-                /> */}
+
                 <TouchableOpacity
                   item={item}
                   onPress={() => this.deleteItem(index, item)}
@@ -173,13 +165,11 @@ export default class ShoppingCart extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        {/* <Button
-          title="Go to Payment"
-          onPress={() => this.handleGoToPayment()}
-        /> */}
-        <TouchableOpacity onPress={() => this.handleGoToPayment()}>
-          <Text style={styles.buttonStyles}>Go to Payment</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={() => this.handleGoToPayment()}>
+            <Text style={styles.buttonStyles}>Go to Payment</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -189,10 +179,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
-  list: {
+  listItem: {
+    margin: 5,
+    padding: 10,
     backgroundColor: "mediumspringgreen",
+    borderWidth: 1,
   },
   editDeleteButtons: {
+    paddingVertical: 5,
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",

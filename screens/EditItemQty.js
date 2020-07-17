@@ -63,10 +63,11 @@ export default class EditItemQty extends React.Component {
           placeholder=""
           onChangeText={(newQty) => this.setState({ newQty })}
         />
-        {/* <Button title="Update Quantiy" onPress={() => this.handleUpdateQty()} /> */}
-        <TouchableOpacity onPress={() => this.handleUpdateQty()}>
-          <Text style={styles.buttonStyles}>Update Quantity</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={() => this.handleUpdateQty()}>
+            <Text style={styles.buttonStyles}>Update Quantity</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -79,7 +80,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
-  //textContainer: { flexDirection: "row" },
   textInput: {
     height: 40,
     width: 40,

@@ -203,6 +203,7 @@ export default class Purchase extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
+          style={{ padding: 10 }}
           data={this.state.purchaseItems}
           renderItem={({ item, index }) => (
             <View style={styles.inputRow}>
@@ -214,7 +215,7 @@ export default class Purchase extends React.Component {
                 index={index}
                 onChangeText={(qty) => this.setRowQty(qty, item, index)}
               />
-              <View>
+              <View style={{ padding: 5 }}>
                 <Text>Item: {item.itemName}</Text>
                 <Text>
                   Price: ${item.price} Credits: {item.credits}
@@ -224,34 +225,23 @@ export default class Purchase extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        {/* <Button
-          title="Add to Shopping Cart"
-          onPress={() =>
-            this.addToShoppingCart(
-              this.state.qtyArray,
-              this.state.purchaseItems
-            )
-          }
-        /> */}
-        <TouchableOpacity
-          onPress={() =>
-            this.addToShoppingCart(
-              this.state.qtyArray,
-              this.state.purchaseItems
-            )
-          }
-        >
-          <Text style={styles.buttonStyles}>Add to Shopping Cart</Text>
-        </TouchableOpacity>
-        {/* <Button
-          title="View Shopping Cart"
-          onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        /> */}
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        >
-          <Text style={styles.buttonStyles}>View Shopping Cart</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              this.addToShoppingCart(
+                this.state.qtyArray,
+                this.state.purchaseItems
+              )
+            }
+          >
+            <Text style={styles.buttonStyles}>Add to Shopping Cart</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("ShoppingCart")}
+          >
+            <Text style={styles.buttonStyles}>View Shopping Cart</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -262,10 +252,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
-  inputRow: { flexDirection: "row" },
+  inputRow: { padding: 5, flexDirection: "row" },
   textInput: {
-    height: 40,
-    width: "10%",
+    height: 30,
+    width: 40,
     borderColor: "gray",
     borderWidth: 1,
     marginTop: 8,
