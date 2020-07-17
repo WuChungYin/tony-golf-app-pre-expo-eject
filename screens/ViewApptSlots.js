@@ -109,15 +109,16 @@ export default class ViewApptSlots extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>
+        <Text
+          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
+        >
           Below are the available slots for {this.state.type}s on{" "}
           {this.state.date}.
         </Text>
         <FlatList
-          style={styles.list}
           data={this.state.apptSlotsData}
           renderItem={({ item, index }) => (
-            <View>
+            <View style={styles.listItem}>
               <Text>
                 {item.date} {item.time} {item.name} Credits:
                 {item.credits}
@@ -148,8 +149,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
-  list: {
+  listItem: {
+    margin: 5,
+    padding: 10,
     backgroundColor: "mediumspringgreen",
+    borderWidth: 1,
   },
   buttonStyles: {
     backgroundColor: "blue",

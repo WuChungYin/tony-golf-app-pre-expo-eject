@@ -22,7 +22,11 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Login</Text>
+        <View style={{ padding: 10 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Bob's Golf Appointment App
+          </Text>
+        </View>
         {this.state.errorMessage && (
           <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
         )}
@@ -41,18 +45,15 @@ export default class Login extends React.Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        {/* <Button
-          title="Login"
-          backgroundColor="red"
-          onPress={this.handleLogin}
-        /> */}
-        <TouchableOpacity onPress={this.handleLogin}>
-          <Text style={styles.buttonStyles}>Login</Text>
-        </TouchableOpacity>
-        <Button
-          title="Don't have an account? Sign Up"
-          onPress={() => this.props.navigation.navigate("SignUp")}
-        />
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={this.handleLogin}>
+            <Text style={styles.buttonStyles}>Login</Text>
+          </TouchableOpacity>
+          <Button
+            title="Don't have an account? Sign Up"
+            onPress={() => this.props.navigation.navigate("SignUp")}
+          />
+        </View>
       </View>
     );
   }

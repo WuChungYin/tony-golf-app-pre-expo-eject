@@ -132,54 +132,61 @@ export default class Payment extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text>Total Price: ${this.state.price}</Text>
-        <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
-        <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
-
-        <Text>Credit Card Number</Text>
-        <TextInput
-          placeholder="Credit Card Number"
-          autoCapitalize="none"
-          style={styles.textInputCC}
-          onChangeText={(CCNum) => this.setState({ CCNum })}
-          value={this.state.CCNum}
-          maxLength="16"
-        />
-
-        <Text>Expiration Date</Text>
-        <View style={styles.expirationDateRow}>
+        <View
+          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
+        >
+          <Text>Total Price: ${this.state.price}</Text>
+          <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
+          <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
+        </View>
+        <View style={{ paddingHorizontal: 15 }}>
+          <Text>Credit Card Number</Text>
           <TextInput
-            placeholder="MM"
+            placeholder="Credit Card Number"
             autoCapitalize="none"
-            style={styles.textInput}
-            onChangeText={(MM) => this.setState({ MM })}
-            value={this.state.MM}
-            maxLength="2"
+            style={styles.textInputCC}
+            onChangeText={(CCNum) => this.setState({ CCNum })}
+            value={this.state.CCNum}
+            maxLength="16"
           />
-          <Text></Text>
+
+          <Text>Expiration Date</Text>
+          <View style={styles.expirationDateRow}>
+            <TextInput
+              placeholder="MM"
+              autoCapitalize="none"
+              style={styles.textInput}
+              onChangeText={(MM) => this.setState({ MM })}
+              value={this.state.MM}
+              maxLength="2"
+            />
+            <Text></Text>
+            <TextInput
+              placeholder="YY"
+              autoCapitalize="none"
+              style={styles.textInput}
+              onChangeText={(YY) => this.setState({ YY })}
+              value={this.state.YY}
+              maxLength="2"
+            />
+          </View>
+
+          <Text>CSC</Text>
           <TextInput
-            placeholder="YY"
+            placeholder="CSC"
             autoCapitalize="none"
             style={styles.textInput}
-            onChangeText={(YY) => this.setState({ YY })}
-            value={this.state.YY}
-            maxLength="2"
+            onChangeText={(CSC) => this.setState({ CSC })}
+            value={this.state.CSC}
+            maxLength="3"
           />
         </View>
 
-        <Text>CSC</Text>
-        <TextInput
-          placeholder="CSC"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={(CSC) => this.setState({ CSC })}
-          value={this.state.CSC}
-          maxLength="3"
-        />
-        {/* <Button title="Process Payment" onPress={this.handlePayment} /> */}
-        <TouchableOpacity onPress={this.handlePayment}>
-          <Text style={styles.buttonStyles}>Process Payment</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={this.handlePayment}>
+            <Text style={styles.buttonStyles}>Process Payment</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

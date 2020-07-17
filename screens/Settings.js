@@ -34,10 +34,11 @@ export default class Settings extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Hi {currentUser && currentUser.email}!</Text>
-        {/* <Button title="Logout" onPress={this.handleLogout} /> */}
-        <TouchableOpacity onPress={this.handleLogout}>
-          <Text style={styles.buttonStyles}>Log Out</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={this.handleLogout}>
+            <Text style={styles.buttonStyles}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

@@ -107,38 +107,27 @@ export default class Home extends React.Component {
         <Text>Hi {currentUser && currentUser.email}!</Text>
         <Text>Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Practice Credits: {this.state.practiceCredits}</Text>
-        {/* <Button
-          title="Reserve Lesson"
-          onPress={this.handleLessonCheckAndRedirect}
-        /> */}
-        <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
-          <Text style={styles.buttonStyles}>Reserve Lesson</Text>
-        </TouchableOpacity>
-        {/* <Button
-          title="Reserve Practice Lane"
-          onPress={this.handlePracticeCheckAndRedirect}
-        /> */}
-        <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
-          <Text style={styles.buttonStyles}>Reserve Practice Lane</Text>
-        </TouchableOpacity>
-        {/* <Button
-          title="Purchase Credits"
-          onPress={() => this.props.navigation.navigate("Purchase")}
-        /> */}
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Purchase")}
-        >
-          <Text style={styles.buttonStyles}>Purchase Credits</Text>
-        </TouchableOpacity>
-        {/* <Button
-          title="View Shopping Cart"
-          onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        /> */}
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("ShoppingCart")}
-        >
-          <Text style={styles.buttonStyles}>View Shopping Cart</Text>
-        </TouchableOpacity>
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
+            <Text style={styles.buttonStyles}>Reserve Lesson</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
+            <Text style={styles.buttonStyles}>Reserve Practice Lane</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Purchase")}
+          >
+            <Text style={styles.buttonStyles}>Purchase Credits</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("ShoppingCart")}
+          >
+            <Text style={styles.buttonStyles}>View Shopping Cart</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

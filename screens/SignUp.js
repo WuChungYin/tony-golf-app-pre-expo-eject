@@ -8,7 +8,6 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
 
 import Firebase, { db } from "../config/Firebase.js";
 
@@ -19,7 +18,6 @@ export default class SignUp extends React.Component {
     phone: "",
     email: "",
     password: "",
-    //dob: "01-01-2020",
     errorMessage: null,
   };
 
@@ -39,7 +37,6 @@ export default class SignUp extends React.Component {
                 lastName: this.state.lastName,
                 phone: this.state.phone,
                 email: this.state.email,
-                //dob: this.state.dob,
                 practiceCredits: 0,
                 lessonCredits: 0,
               };
@@ -70,7 +67,11 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Sign Up</Text>
+        <View style={{ padding: 10 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Bob's Golf Appointment App
+          </Text>
+        </View>
         {this.state.errorMessage && (
           <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
         )}
@@ -102,31 +103,7 @@ export default class SignUp extends React.Component {
           onChangeText={(email) => this.setState({ email })}
           value={this.state.email}
         />
-        {/* <DatePicker
-          style={{ width: 200 }}
-          date={this.state.dob} //initial date from state
-          mode="date" //The enum of date, datetime and time
-          placeholder=""
-          format="MM-DD-YYYY"
-          minDate="01-01-1900"
-          maxDate="01-01-2050"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={(dob) => {
-            this.setState({ dob: dob });
-          }}
-        /> */}
+
         <TextInput
           secureTextEntry
           placeholder="Password"
@@ -135,14 +112,15 @@ export default class SignUp extends React.Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        {/* <Button title="Sign Up" onPress={this.handleSignUp} /> */}
-        <TouchableOpacity onPress={this.handleSignUp}>
-          <Text style={styles.buttonStyles}>Sign Up</Text>
-        </TouchableOpacity>
-        <Button
-          title="Already have an account? Login"
-          onPress={() => this.props.navigation.navigate("Login")}
-        />
+        <View style={{ padding: 10 }}>
+          <TouchableOpacity onPress={this.handleSignUp}>
+            <Text style={styles.buttonStyles}>Sign Up</Text>
+          </TouchableOpacity>
+          <Button
+            title="Already have an account? Login"
+            onPress={() => this.props.navigation.navigate("Login")}
+          />
+        </View>
       </View>
     );
   }
