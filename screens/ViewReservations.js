@@ -99,9 +99,7 @@ export default class ViewReservations extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text
-          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
-        >
+        <Text style={styles.topTextStyles}>
           Below are your scheduled reservations:
         </Text>
         <FlatList
@@ -111,11 +109,6 @@ export default class ViewReservations extends React.Component {
               <Text>
                 {item.date} {item.time} {item.name}
               </Text>
-              {/* <Button
-                title="Cancel Reservation"
-                item={item}
-                onPress={() => this.handleCancelReservation(index, item)}
-              /> */}
               <TouchableOpacity
                 item={item}
                 onPress={() => this.handleCancelReservation(index, item)}
@@ -137,6 +130,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
+  topTextStyles: { paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 },
   listItem: {
     margin: 5,
     padding: 10,

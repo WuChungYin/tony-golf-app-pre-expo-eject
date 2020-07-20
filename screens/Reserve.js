@@ -53,7 +53,7 @@ export default class Reserve extends React.Component {
               this.setState({ date: date });
             }}
           />
-          <View style={styles.buttons}>
+          <View style={styles.buttonView}>
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -85,14 +85,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "lightgreen",
-  },
-  dateAndButtons: {
-    padding: 10,
     justifyContent: "center",
     alignItems: "center",
   },
+  dateAndButtons: {
+    padding: 10,
+  },
   datePicker: { width: 200, backgroundColor: "white" },
-  buttons: { padding: 10, flexDirection: "row" },
+  buttonView: { padding: 10, flexDirection: "row" },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",
