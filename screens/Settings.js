@@ -34,7 +34,7 @@ export default class Settings extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Hi {currentUser && currentUser.email}!</Text>
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handleLogout}>
             <Text style={styles.buttonStyles}>Log Out</Text>
           </TouchableOpacity>
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

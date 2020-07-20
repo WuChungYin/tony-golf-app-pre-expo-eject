@@ -203,10 +203,10 @@ export default class Purchase extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          style={{ padding: 10 }}
+          style={styles.list}
           data={this.state.purchaseItems}
           renderItem={({ item, index }) => (
-            <View style={styles.inputRow}>
+            <View style={styles.itemRow}>
               <TextInput
                 autoCapitalize="none"
                 placeholder="Qty"
@@ -215,7 +215,7 @@ export default class Purchase extends React.Component {
                 index={index}
                 onChangeText={(qty) => this.setRowQty(qty, item, index)}
               />
-              <View style={{ padding: 5 }}>
+              <View style={styles.itemTextView}>
                 <Text>Item: {item.itemName}</Text>
                 <Text>
                   Price: ${item.price} Credits: {item.credits}
@@ -225,7 +225,7 @@ export default class Purchase extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity
             onPress={() =>
               this.addToShoppingCart(
@@ -252,7 +252,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
-  inputRow: { padding: 5, flexDirection: "row" },
+  list: { padding: 10 },
+  itemRow: { padding: 5, flexDirection: "row" },
+  itemTextView: { padding: 5 },
   textInput: {
     height: 30,
     width: 40,
@@ -261,6 +263,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     backgroundColor: "white",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

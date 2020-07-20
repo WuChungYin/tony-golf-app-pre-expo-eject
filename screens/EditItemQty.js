@@ -63,7 +63,7 @@ export default class EditItemQty extends React.Component {
           placeholder=""
           onChangeText={(newQty) => this.setState({ newQty })}
         />
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={() => this.handleUpdateQty()}>
             <Text style={styles.buttonStyles}>Update Quantity</Text>
           </TouchableOpacity>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     backgroundColor: "white",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

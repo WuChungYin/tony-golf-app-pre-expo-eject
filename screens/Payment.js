@@ -132,14 +132,12 @@ export default class Payment extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <View
-          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
-        >
+        <View style={styles.topTextView}>
           <Text>Total Price: ${this.state.price}</Text>
           <Text>Total Lesson Credits: {this.state.lessonCredits}</Text>
           <Text>Total Practice Credits: {this.state.practiceCredits}</Text>
         </View>
-        <View style={{ paddingHorizontal: 15 }}>
+        <View style={styles.inputView}>
           <Text>Credit Card Number</Text>
           <TextInput
             placeholder="Credit Card Number"
@@ -149,7 +147,6 @@ export default class Payment extends React.Component {
             value={this.state.CCNum}
             maxLength="16"
           />
-
           <Text>Expiration Date</Text>
           <View style={styles.expirationDateRow}>
             <TextInput
@@ -170,7 +167,6 @@ export default class Payment extends React.Component {
               maxLength="2"
             />
           </View>
-
           <Text>CSC</Text>
           <TextInput
             placeholder="CSC"
@@ -181,8 +177,7 @@ export default class Payment extends React.Component {
             maxLength="3"
           />
         </View>
-
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handlePayment}>
             <Text style={styles.buttonStyles}>Process Payment</Text>
           </TouchableOpacity>
@@ -196,6 +191,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
+  topTextView: { paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 },
+  inputView: { paddingHorizontal: 15 },
   expirationDateRow: { flexDirection: "row" },
   textInputCC: {
     height: 40,
@@ -213,6 +210,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     backgroundColor: "white",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

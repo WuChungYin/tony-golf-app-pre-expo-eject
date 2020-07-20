@@ -22,10 +22,8 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ padding: 10 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            Bob's Golf Appointment App
-          </Text>
+        <View style={styles.titleView}>
+          <Text style={styles.titleText}>Bob's Golf Appointment App</Text>
         </View>
         {this.state.errorMessage && (
           <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
@@ -45,7 +43,7 @@ export default class Login extends React.Component {
           onChangeText={(password) => this.setState({ password })}
           value={this.state.password}
         />
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handleLogin}>
             <Text style={styles.buttonStyles}>Login</Text>
           </TouchableOpacity>
@@ -65,6 +63,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
+  titleView: { padding: 10 },
+  titleText: { fontSize: 20, fontWeight: "bold" },
   textInput: {
     height: 40,
     width: "90%",
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     backgroundColor: "white",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

@@ -109,9 +109,7 @@ export default class ViewApptSlots extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text
-          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
-        >
+        <Text style={styles.topTextStyles}>
           Below are the available slots for {this.state.type}s on{" "}
           {this.state.date}.
         </Text>
@@ -123,11 +121,6 @@ export default class ViewApptSlots extends React.Component {
                 {item.date} {item.time} {item.name} Credits:
                 {item.credits}
               </Text>
-              {/* <Button
-                title="Select Appointment Slot"
-                item={item}
-                onPress={() => this.selectApptSlot(index, item)}
-              /> */}
               <TouchableOpacity
                 item={item}
                 onPress={() => this.selectApptSlot(index, item)}
@@ -149,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
+  topTextStyles: { paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 },
   listItem: {
     margin: 5,
     padding: 10,

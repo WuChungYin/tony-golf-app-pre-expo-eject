@@ -100,7 +100,12 @@ export default class ShoppingCart extends React.Component {
     db.collection("shoppingCart")
       .doc(item.id)
       .delete()
-      .then(() => console.log(item.id + "deleted successfully!"));
+      .then(
+        Alert.alert(
+          "Success!",
+          "You have removed the selected item from your shopping cart."
+        )
+      );
   };
 
   handleGoToPayment = () => {
@@ -130,14 +135,11 @@ export default class ShoppingCart extends React.Component {
     const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <View
-          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
-        >
+        <View style={styles.topTextView}>
           <Text>Total Price: ${this.state.totalPrice}</Text>
           <Text>Total Lesson Credits: {this.state.totalLessonCredits}</Text>
           <Text>Total Practice Credits: {this.state.totalPracticeCredits}</Text>
         </View>
-
         <FlatList
           data={this.state.shoppingCartData}
           renderItem={({ item, index }) => (
@@ -165,7 +167,7 @@ export default class ShoppingCart extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={() => this.handleGoToPayment()}>
             <Text style={styles.buttonStyles}>Go to Payment</Text>
           </TouchableOpacity>
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "lightgreen",
   },
+  topTextView: { paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 },
   listItem: {
     margin: 5,
     padding: 10,
@@ -192,6 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",

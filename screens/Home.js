@@ -107,7 +107,7 @@ export default class Home extends React.Component {
         <Text>Hi {currentUser && currentUser.email}!</Text>
         <Text>Lesson Credits: {this.state.lessonCredits}</Text>
         <Text>Practice Credits: {this.state.practiceCredits}</Text>
-        <View style={{ padding: 10 }}>
+        <View style={styles.buttonView}>
           <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
             <Text style={styles.buttonStyles}>Reserve Lesson</Text>
           </TouchableOpacity>
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "lightgreen",
   },
+  buttonView: { padding: 10 },
   buttonStyles: {
     backgroundColor: "blue",
     borderColor: "white",
