@@ -1,11 +1,8 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
-  Image,
   Text,
   View,
-  Button,
   FlatList,
   Alert,
   TouchableOpacity,
@@ -14,26 +11,51 @@ import {
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class ViewReservations extends React.Component {
-  state = { currentUser: null, apptSlotsData: [] };
+  constructor(props) {
+    super(props);
+    //this._isMounted = false;
+    this.state = { currentUser: null, apptSlotsData: [] };
+  }
+  //state = { currentUser: null, apptSlotsData: [] };
 
   componentDidMount() {
-    const { currentUser } = Firebase.auth();
-    this.setState({ currentUser });
+    // const { currentUser } = Firebase.auth();
+    // this.setState({ currentUser });
 
-    this.unsubscribe = db
-      .collection("appointments")
-      .where("uid", "==", currentUser.uid)
-      .onSnapshot(this.onCollectionUpdate);
+    // this.unsubscribe = db
+    //   .collection("appointments")
+    //   .where("uid", "==", currentUser.uid)
+    //   .onSnapshot(this.onCollectionUpdate);
+    //this._isMounted = true;
+    this.loadInitialData();
+    this.willFocusListener = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        this.loadInitialData();
+      }
+    );
   }
 
   collectionWillUnMount() {
-    this.unsubscribe();
+    //this.unsubscribe();
+    //this._isMounted = false;
+    this.willFocusListener.remove();
   }
 
+  loadInitialData = () => {
+    const { currentUser } = Firebase.auth();
+    this.setState({ currentUser });
+
+    //this.unsubscribe = db
+    db.collection("appointments")
+      .where("uid", "==", currentUser.uid)
+      .onSnapshot(this.onCollectionUpdate);
+  };
+
   onCollectionUpdate = (querySnapshot) => {
-    const apptSlotsData = [];
+    var apptSlotsData = [];
     querySnapshot.forEach((doc) => {
-      const { id, date, time, type, name, credits } = doc.data();
+      let { id, date, time, type, name, credits } = doc.data();
       apptSlotsData.push({
         id,
         date,
@@ -59,8 +81,8 @@ export default class ViewReservations extends React.Component {
         .doc(userID)
         .get()
         .then((doc) => {
-          var oldLessonCredits = doc.data().lessonCredits;
-          var newLessonCredits = oldLessonCredits + 1;
+          let oldLessonCredits = doc.data().lessonCredits;
+          let newLessonCredits = oldLessonCredits + 1;
           db.collection("users").doc(userID).update({
             lessonCredits: newLessonCredits,
           });
@@ -78,8 +100,8 @@ export default class ViewReservations extends React.Component {
         .doc(userID)
         .get()
         .then((doc) => {
-          var oldPracticeCredits = doc.data().practiceCredits;
-          var newPracticeCredits = oldPracticeCredits + 1;
+          let oldPracticeCredits = doc.data().practiceCredits;
+          let newPracticeCredits = oldPracticeCredits + 1;
           db.collection("users").doc(userID).update({
             practiceCredits: newPracticeCredits,
           });
@@ -96,7 +118,6 @@ export default class ViewReservations extends React.Component {
   };
 
   render() {
-    const { currentUser } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.topTextStyles}>
@@ -123,6 +144,7 @@ export default class ViewReservations extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

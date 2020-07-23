@@ -1,12 +1,9 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
-  Image,
   Text,
   TextInput,
   View,
-  Button,
   FlatList,
   Alert,
   TouchableOpacity,
@@ -15,78 +12,18 @@ import {
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class Purchase extends React.Component {
-  state = {};
-  constructor(props) {
-    super(props);
-    this.state = {
-      // purchaseItems: [
-      //   // {
-      //   //   id: 1,
-      //   //   price: 50,
-      //   //   credits: 10,
-      //   //   itemName: "Package - Adult Lessons",
-      //   //   age: "Adult",
-      //   //   type: "lesson",
-      //   // },
-      //   // {
-      //   //   id: 2,
-      //   //   price: 50,
-      //   //   credits: 10,
-      //   //   itemName: "Package - Junior Lessons",
-      //   //   age: "Junior",
-      //   //   type: "lesson",
-      //   // },
-      //   {
-      //     id: 1,
-      //     price: 50,
-      //     credits: 10,
-      //     itemName: "Package - Lessons",
-      //     type: "lesson",
-      //   },
-      //   {
-      //     id: 3,
-      //     price: 150,
-      //     credits: 30,
-      //     itemName: "Package - Practice Lane",
-      //     //age: null,
-      //     type: "practice",
-      //   },
-      //   // {
-      //   //   id: 4,
-      //   //   price: 5,
-      //   //   credits: 1,
-      //   //   itemName: "Single - Adult Lesson",
-      //   //   age: "Adult",
-      //   //   type: "lesson",
-      //   // },
-      //   // {
-      //   //   id: 5,
-      //   //   price: 5,
-      //   //   credits: 1,
-      //   //   itemName: "Single - Junior Lesson",
-      //   //   age: "Junior",
-      //   //   type: "lesson",
-      //   // },
-      //   {
-      //     id: 4,
-      //     price: 5,
-      //     credits: 1,
-      //     itemName: "Single - Lesson",
-      //     type: "lesson",
-      //   },
-      //   {
-      //     id: 6,
-      //     price: 5,
-      //     credits: 1,
-      //     itemName: "Single - Practice Lane",
-      //     //age: null,
-      //     type: "practice",
-      //   },
-      // ],
-      purchaseItems: [],
-      qtyArray: [],
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     purchaseItems: [],
+  //     qtyArray: [],
+  //   };
+  // }
+
+  state = {
+    purchaseItems: [],
+    qtyArray: [],
+  };
 
   componentDidMount() {
     this.unsubscribe = db
@@ -99,9 +36,9 @@ export default class Purchase extends React.Component {
   }
 
   onCollectionUpdate = (querySnapshot) => {
-    const purchaseItems = [];
+    var purchaseItems = [];
     querySnapshot.forEach((doc) => {
-      const { id, price, credits, itemName, type } = doc.data();
+      let { id, price, credits, itemName, type } = doc.data();
       purchaseItems.push({
         id,
         price,
@@ -113,35 +50,31 @@ export default class Purchase extends React.Component {
     this.setState({ purchaseItems: purchaseItems });
     console.log("purchaseItems = " + JSON.stringify(this.state.purchaseItems));
 
-    //console.log("Purchase Items: " + JSON.stringify(this.state.purchaseItems));
     const numItems = this.state.purchaseItems.length;
-    //console.log("numItems: " + numItems);
     var newArray = this.state.qtyArray.slice();
-    //console.log("initialized newArray: " + JSON.stringify(newArray));
     var i;
     for (i = 0; i < numItems; i++) {
       newArray.push(0);
     }
-    //console.log("populated newArray: " + JSON.stringify(newArray));
     this.setState({ qtyArray: [...this.state.qtyArray, ...newArray] }, () =>
       console.log("qtyArray: " + this.state.qtyArray)
     );
   };
 
-  setRowQty = (qty, item, index) => {
+  handleSetRowQty = (qty, item, index) => {
     var intqty = parseInt(qty, 10); //10 means base-10
     if (!intqty) {
       //checking if intqty is null or NaN, and if so, set it to 0
       intqty = 0;
     }
-    const newArray = [...this.state.qtyArray];
+    var newArray = [...this.state.qtyArray];
     newArray[index] = intqty;
     this.setState({ qtyArray: newArray }, () =>
       console.log("qtyArray: " + this.state.qtyArray)
     );
   };
 
-  addToShoppingCart = (qtyArray, data) => {
+  handleAddToShoppingCart = (qtyArray, data) => {
     console.log("shopping qtyArray: " + JSON.stringify(qtyArray));
     console.log("shopping purchaseItems: " + JSON.stringify(data));
 
@@ -165,7 +98,6 @@ export default class Purchase extends React.Component {
           price: data[i].price,
           credits: data[i].credits,
           itemName: data[i].itemName,
-          //age: data[i].age,
           type: data[i].type,
           uid: uid,
         };
@@ -173,7 +105,6 @@ export default class Purchase extends React.Component {
           "Shopping Item #" + i + ":" + JSON.stringify(shoppingCartItem)
         );
         console.log("inserting this item");
-        //var docRef = db.collection("shoppingCart").doc();
         batch.set(docRef, shoppingCartItem);
       } else {
         console.log("not inserting this item");
@@ -213,7 +144,7 @@ export default class Purchase extends React.Component {
                 style={styles.textInput}
                 item={item}
                 index={index}
-                onChangeText={(qty) => this.setRowQty(qty, item, index)}
+                onChangeText={(qty) => this.handleSetRowQty(qty, item, index)}
               />
               <View style={styles.itemTextView}>
                 <Text>Item: {item.itemName}</Text>
@@ -228,7 +159,7 @@ export default class Purchase extends React.Component {
         <View style={styles.buttonView}>
           <TouchableOpacity
             onPress={() =>
-              this.addToShoppingCart(
+              this.handleAddToShoppingCart(
                 this.state.qtyArray,
                 this.state.purchaseItems
               )

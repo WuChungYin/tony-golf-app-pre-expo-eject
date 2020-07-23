@@ -1,28 +1,23 @@
 import React from "react";
-import {
-  StyleSheet,
-  Platform,
-  Image,
-  Text,
-  View,
-  Button,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
 
 export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-      lessonCredits: null,
-      practiceCredits: null,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currentUser: null,
+  //     lessonCredits: null,
+  //     practiceCredits: null,
+  //   };
+  // }
 
-  //state = { currentUser: null, lessonCredits: null, practiceCredits: null };
+  state = {
+    currentUser: null,
+    lessonCredits: null,
+    practiceCredits: null,
+  };
 
   componentDidMount() {
     this.loadInitialData();
@@ -43,7 +38,7 @@ export default class Home extends React.Component {
     this.setState({ currentUser });
 
     const uid = currentUser.uid;
-    console.log("user's UID: " + uid);
+    //console.log("user's UID: " + uid);
 
     db.collection("users")
       .doc(uid)
@@ -111,17 +106,14 @@ export default class Home extends React.Component {
           <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
             <Text style={styles.buttonStyles}>Reserve Lesson</Text>
           </TouchableOpacity>
-
           <TouchableOpacity onPress={this.handleLessonCheckAndRedirect}>
             <Text style={styles.buttonStyles}>Reserve Practice Lane</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Purchase")}
           >
             <Text style={styles.buttonStyles}>Purchase Credits</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("ShoppingCart")}
           >

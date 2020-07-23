@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Platform,
-  Image,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import Firebase from "../config/Firebase.js";
 
@@ -43,6 +35,7 @@ export default class Settings extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
