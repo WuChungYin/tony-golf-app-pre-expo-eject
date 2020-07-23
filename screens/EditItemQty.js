@@ -1,12 +1,9 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
-  Image,
   Text,
   TextInput,
   View,
-  Button,
   Alert,
   TouchableOpacity,
 } from "react-native";
@@ -53,7 +50,6 @@ export default class EditItemQty extends React.Component {
   };
 
   render() {
-    const { currentUser } = this.state;
     return (
       <View style={styles.container}>
         <Text>Current Quantity: {this.state.itemQty}</Text>
@@ -72,6 +68,7 @@ export default class EditItemQty extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

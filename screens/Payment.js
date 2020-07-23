@@ -1,19 +1,14 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
-  Image,
   Text,
   TextInput,
   View,
-  Button,
-  FlatList,
   Alert,
   TouchableOpacity,
 } from "react-native";
 
 import Firebase, { db } from "../config/Firebase.js";
-import { StackRouter } from "react-navigation";
 
 export default class Payment extends React.Component {
   state = {
@@ -129,7 +124,6 @@ export default class Payment extends React.Component {
   };
 
   render() {
-    const { currentUser } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.topTextView}>
@@ -145,7 +139,7 @@ export default class Payment extends React.Component {
             style={styles.textInputCC}
             onChangeText={(CCNum) => this.setState({ CCNum })}
             value={this.state.CCNum}
-            maxLength="16"
+            maxLength={16}
           />
           <Text>Expiration Date</Text>
           <View style={styles.expirationDateRow}>
@@ -155,7 +149,7 @@ export default class Payment extends React.Component {
               style={styles.textInput}
               onChangeText={(MM) => this.setState({ MM })}
               value={this.state.MM}
-              maxLength="2"
+              maxLength={2}
             />
             <Text></Text>
             <TextInput
@@ -164,7 +158,7 @@ export default class Payment extends React.Component {
               style={styles.textInput}
               onChangeText={(YY) => this.setState({ YY })}
               value={this.state.YY}
-              maxLength="2"
+              maxLength={2}
             />
           </View>
           <Text>CSC</Text>
@@ -174,7 +168,7 @@ export default class Payment extends React.Component {
             style={styles.textInput}
             onChangeText={(CSC) => this.setState({ CSC })}
             value={this.state.CSC}
-            maxLength="3"
+            maxLength={3}
           />
         </View>
         <View style={styles.buttonView}>
@@ -186,6 +180,7 @@ export default class Payment extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

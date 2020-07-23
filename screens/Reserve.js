@@ -1,32 +1,20 @@
 import React from "react";
-import {
-  StyleSheet,
-  Platform,
-  Image,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import DatePicker from "react-native-datepicker";
-
-import Firebase, { db } from "../config/Firebase.js";
+//import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default class Reserve extends React.Component {
   state = { date: "06-22-2020" };
 
-  componentDidMount() {}
-
   render() {
-    const { currentUser } = this.state;
     return (
       <View style={styles.container}>
-        <Text
-          style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 }}
-        >
-          Please select the date and type of appointment you would like to
-          reserve.
-        </Text>
+        <View>
+          <Text style={styles.topTextStyles}>
+            Please select the date and type of appointment you would like to
+            reserve.
+          </Text>
+        </View>
         <View style={styles.dateAndButtons}>
           <DatePicker
             style={styles.datePicker}
@@ -49,7 +37,7 @@ export default class Reserve extends React.Component {
                 marginLeft: 36,
               },
             }}
-            onDateChange={(date) => {
+            onChange={(date) => {
               this.setState({ date: date });
             }}
           />
@@ -64,7 +52,6 @@ export default class Reserve extends React.Component {
             >
               <Text style={styles.buttonStyles}>Lessons</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate("ViewApptSlots", {
@@ -81,6 +68,7 @@ export default class Reserve extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,6 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  topTextStyles: { paddingHorizontal: 15, paddingTop: 15, paddingBottom: 10 },
   dateAndButtons: {
     padding: 10,
   },

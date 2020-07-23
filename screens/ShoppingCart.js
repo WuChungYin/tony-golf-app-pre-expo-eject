@@ -1,11 +1,8 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
-  Image,
   Text,
   View,
-  Button,
   FlatList,
   Alert,
   TouchableOpacity,
@@ -16,7 +13,8 @@ import Firebase, { db } from "../config/Firebase.js";
 export default class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
-    this.unsubscribe = null;
+    //this.unsubscribe = null;
+    //this._isMounted = false;
     this.state = {
       shoppingCartData: [],
       currentUser: null,
@@ -25,26 +23,54 @@ export default class ShoppingCart extends React.Component {
       totalLessonCredits: 0,
     };
   }
+  // state = {
+  //   shoppingCartData: [],
+  //   currentUser: null,
+  //   totalPrice: 0,
+  //   totalPracticeCredits: 0,
+  //   totalLessonCredits: 0,
+  // };
 
   componentDidMount() {
+    // const { currentUser } = Firebase.auth();
+    // const uid = currentUser.uid;
+    // this.setState({ currentUser });
+
+    // this.unsubscribe = db
+    //   .collection("shoppingCart")
+    //   .where("uid", "==", uid)
+    //   .onSnapshot(this.onCollectionUpdate);
+    //this._isMounted = true;
+    this.loadInitialData();
+    this.willFocusListener = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        this.loadInitialData();
+      }
+    );
+  }
+
+  collectionWillUnMount() {
+    //this.unsubscribe();
+    //this._isMounted = false;
+    this.willFocusListener.remove();
+  }
+
+  loadInitialData = () => {
     const { currentUser } = Firebase.auth();
     const uid = currentUser.uid;
     this.setState({ currentUser });
 
-    this.unsubscribe = db
-      .collection("shoppingCart")
+    //this.unsubscribe = db
+    db.collection("shoppingCart")
       .where("uid", "==", uid)
       .onSnapshot(this.onCollectionUpdate);
-  }
-
-  collectionWillUnMount() {
-    this.unsubscribe();
-  }
+  };
 
   onCollectionUpdate = (querySnapshot) => {
-    const shoppingCartData = [];
+    var shoppingCartData = [];
     querySnapshot.forEach((doc) => {
-      const { id, qty, price, credits, itemName, type, uid } = doc.data();
+      let { id, qty, price, credits, itemName, type, uid } = doc.data();
       shoppingCartData.push({
         id,
         qty,
@@ -52,7 +78,6 @@ export default class ShoppingCart extends React.Component {
         credits,
         itemName,
         type,
-        //age,
         uid,
       });
     });
@@ -88,7 +113,7 @@ export default class ShoppingCart extends React.Component {
     );
   };
 
-  deleteItem = (index, item) => {
+  handleDeleteItem = (index, item) => {
     console.log("Delete item index: " + index);
     console.log("Delete item id:" + item.id);
 
@@ -132,7 +157,6 @@ export default class ShoppingCart extends React.Component {
   };
 
   render() {
-    const { currentUser } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.topTextView}>
@@ -158,7 +182,7 @@ export default class ShoppingCart extends React.Component {
 
                 <TouchableOpacity
                   item={item}
-                  onPress={() => this.deleteItem(index, item)}
+                  onPress={() => this.handleDeleteItem(index, item)}
                 >
                   <Text style={styles.buttonStyles}>Delete Item</Text>
                 </TouchableOpacity>
@@ -176,6 +200,7 @@ export default class ShoppingCart extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
