@@ -1,3 +1,5 @@
+Golf lessons appointment app, where users are able to create accounts, purchase credits, use credits to schedule golf lessons or golf lane usage, and view/remove scheduled appointments.
+
 Instructions To Start The App
   1. Store tony-golf-app-pre-expo-eject folder in a directory of choice
   2. Download Expo client app on your smart phone
